@@ -6,7 +6,7 @@ android {
         applicationId "com.elior.findmyloss"
         minSdkVersion 14
         targetSdkVersion 28
-        versionCode 3
+        versionCode 4
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true

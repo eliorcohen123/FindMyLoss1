@@ -161,19 +161,6 @@ public class AdapterNearbyLoss extends RecyclerView.Adapter<AdapterNearbyLoss.Vi
                     distanceKm1 = String.valueOf(disM) + " Km";
                     holder.km.setText(distanceKm1);
                 }
-
-                Collections.sort(lossList, new Comparator<Loss>() {
-                    public int compare(Loss obj1, Loss obj2) {
-                        // ## Ascending order
-//                return obj1.getDistance().compareToIgnoreCase(obj2.getDistance()); // To compare string values
-                        return Double.compare(Math.sqrt(Math.pow(obj1.getmLat() - location.getLatitude(), 2) + Math.pow(obj1.getmLng() - location.getLongitude(), 2)),
-                                Math.sqrt(Math.pow(obj2.getmLat() - location.getLatitude(), 2) + Math.pow(obj2.getmLng() - location.getLongitude(), 2))); // To compare integer values
-
-                        // ## Descending order
-                        // return obj2.getCompanyName().compareToIgnoreCase(obj1.getCompanyName()); // To compare string values
-                        // return Integer.valueOf(obj2.getId()).compareTo(obj1.getId()); // To compare integer values
-                    }
-                });
             }
         }
         holder.description.setText(loss.getmDescription());
