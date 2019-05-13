@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="Radius:">
+        <com.elior.findmyloss.OthersPck.MySeekBar
+            android:defaultValue="5000"
+            android:key="seek"
+            android:title="Radius" />
+    </PreferenceCategory>
+</PreferenceScreen>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/options"
+        android:icon="@drawable/ic_dehaze_red_24dp"
+        android:title=""
+        app:showAsAction="ifRoom">
+
+        <menu>
+
+            <item
+                android:id="@+id/add_loss"
+                android:icon="@drawable/ic_add_blue_24dp"
+                android:title="Add loss"></item>
+
+            <item
+                android:id="@+id/nearby_loss"
+                android:icon="@drawable/ic_playlist_add_check_blue_24dp"
+                android:title="Nearby loss"></item>
+
+            <item
+                android:id="@+id/my_radius"
+                android:icon="@drawable/ic_edit_location_blue_24dp"
+                android:title="Choose radius"></item>
+
+            <item
+                android:id="@+id/share_intent"
+                android:icon="@drawable/ic_share_blue_24dp"
+                android:title="Share the app"></item>
+
+            <item
+                android:id="@+id/exit"
+                android:icon="@drawable/ic_exit_to_app_blue_24dp"
+                android:title="Exit"></item>
+        </menu>
+    </item>
+
+</menu>
