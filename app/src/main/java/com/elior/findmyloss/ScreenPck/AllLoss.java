@@ -128,7 +128,6 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
 
         swipeRefreshLayout = findViewById(R.id.swipe_containerFrag);
         swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorOrange));
-        // Refresh the MapDBHelper of app in ListView of MainActivity
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
