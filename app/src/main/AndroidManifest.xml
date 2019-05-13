@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.elior.findmyloss">
+    package="com.elior.findmyloss"
+    android:versionCode="1"
+    android:versionName="1.0.0">
+
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -33,6 +39,12 @@
         <activity android:name=".ScreenPck.AddLoss" />
         <activity android:name=".ScreenPck.NearbyLoss" />
         <activity android:name=".ScreenPck.SettingsActivity" />
+
+        <service android:name=".OthersPck.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

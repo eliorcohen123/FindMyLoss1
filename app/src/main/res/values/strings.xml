@@ -36,4 +36,5 @@
     <string name="item_removed_message">Lost was added…</string>
     <string name="undo">OK</string>
     <string name="Firebase_Key">API_KEY</string>
+    <string name="default_notification_channel_id">1</string>
 </resources>
