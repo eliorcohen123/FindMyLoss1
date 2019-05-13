@@ -27,6 +27,7 @@ import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.LocationManager;
 import android.support.v4.app.ActivityCompat;
+import android.widget.Toast;
 
 import com.elior.findmyloss.OthersPck.Loss;
 import com.elior.findmyloss.R;
@@ -53,8 +54,10 @@ public class AdapterAllLoss extends RecyclerView.Adapter<AdapterAllLoss.ViewHold
         public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
             menu.setHeaderTitle("Select action");
             MenuItem share = menu.add(Menu.NONE, 1, 1, "Share details");
+            MenuItem report = menu.add(Menu.NONE, 2, 2, "Reporting Lost");
 
             share.setOnMenuItemClickListener(onChange);
+            report.setOnMenuItemClickListener(onChange);
         }
 
         private final MenuItem.OnMenuItemClickListener onChange = new MenuItem.OnMenuItemClickListener() {
@@ -66,11 +69,30 @@ public class AdapterAllLoss extends RecyclerView.Adapter<AdapterAllLoss.ViewHold
                     String phone = loss.getmPhone();
                     String place = loss.getmPlace();
                     String description = loss.getmDescription();
+                    String date = loss.getmDate();
                     Intent sendIntent = new Intent();
                     sendIntent.setAction(Intent.ACTION_SEND);
-                    sendIntent.putExtra(Intent.EXTRA_TEXT, "Name: " + name + "\nPhone: " + phone + "\nPlace: " + place + "\nDescription: " + description);
+                    sendIntent.putExtra(Intent.EXTRA_TEXT, "Name: " + name + "\nPhone: " + phone + "\nPlace: " + place +
+                            "\nDescription: " + description + "\nDate: " + date);
                     sendIntent.setType("text/plain");
                     mInflater.getContext().startActivity(sendIntent);
+                } else if (item.getItemId() == 2) {
+                    String name = loss.getmName();
+                    String phone = loss.getmPhone();
+                    String place = loss.getmPlace();
+                    String description = loss.getmDescription();
+                    String date = loss.getmDate();
+                    Intent i = new Intent(Intent.ACTION_SEND);
+                    i.setType("message/rfc822");
+                    i.putExtra(Intent.EXTRA_EMAIL, new String[]{"reportlost1@gmail.com"});
+                    i.putExtra(Intent.EXTRA_SUBJECT, "Reporting Lost");
+                    i.putExtra(Intent.EXTRA_TEXT, "Name: " + name + "\nPhone: " + phone + "\nPlace: " + place +
+                            "\nDescription: " + description + "\nDate: " + date + "\n\nThe above loss was found.");
+                    try {
+                        mInflater.getContext().startActivity(Intent.createChooser(i, "Send mail..."));
+                    } catch (android.content.ActivityNotFoundException ex) {
+                        Toast.makeText(mInflater.getContext(), "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+                    }
                 }
                 return false;
             }

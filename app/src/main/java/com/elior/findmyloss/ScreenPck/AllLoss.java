@@ -176,6 +176,7 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
                         arrayListAllLoss.add(new Loss(snapshot.child("userName").getValue() + "",
                                 snapshot.child("phone").getValue() + "",
                                 snapshot.child("place").getValue() + "",
+                                snapshot.child("date").getValue() + "",
                                 lat,
                                 lng,
                                 snapshot.child("description").getValue() + ""));

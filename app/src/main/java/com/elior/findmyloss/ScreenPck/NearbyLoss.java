@@ -166,6 +166,7 @@ public class NearbyLoss extends AppCompatActivity implements NavigationView.OnNa
                                     arrayListMyNearLoss.add(new Loss(snapshot.child("userName").getValue() + "",
                                             snapshot.child("phone").getValue() + "",
                                             snapshot.child("place").getValue() + "",
+                                            snapshot.child("date").getValue() + "",
                                             lat,
                                             lng,
                                             snapshot.child("description").getValue() + ""));

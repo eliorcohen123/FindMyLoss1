@@ -124,12 +124,10 @@ public class AddLoss extends AppCompatActivity implements NavigationView.OnNavig
                         if (!TextUtils.isEmpty(userNameWrite.getText()) && !TextUtils.isEmpty(phoneWrite.getText())
                                 && !TextUtils.isEmpty(placeWrite.getText()) && !TextUtils.isEmpty(descriptionWrite.getText())) {  // If the text are not empty the movie will not be approved
                             firebase = new Firebase(getString(R.string.Firebase_Key));
+                            firebase.child(time).child("date").setValue(time);
                             firebase.child(time).child("lat").setValue(location.getLatitude());
                             firebase.child(time).child("lng").setValue(location.getLongitude());
                         }
-                    } else {
-                        firebase.child(time).child("lat").setValue("No");
-                        firebase.child(time).child("lng").setValue("location");
                     }
                 }
 

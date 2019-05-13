@@ -5,14 +5,16 @@ public class Loss {
     private String mName;
     private String mPhone;
     private String mPlace;
+    private String mDate;
     private double mLat;
     private double mLng;
     private String mDescription;
 
-    public Loss(String mName, String mPhone, String mPlace, double mLat, double mLng, String mDescription) {
+    public Loss(String mName, String mPhone, String mPlace, String mDate, double mLat, double mLng, String mDescription) {
         this.mName = mName;
         this.mPhone = mPhone;
         this.mPlace = mPlace;
+        this.mDate = mDate;
         this.mLat = mLat;
         this.mLng = mLng;
         this.mDescription = mDescription;
@@ -40,6 +42,14 @@ public class Loss {
 
     public void setmPlace(String mPlace) {
         this.mPlace = mPlace;
+    }
+
+    public String getmDate() {
+        return mDate;
+    }
+
+    public void setmDate(String mDate) {
+        this.mDate = mDate;
     }
 
     public double getmLat() {
