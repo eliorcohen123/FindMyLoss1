@@ -152,8 +152,11 @@ public class AdapterAllLoss extends RecyclerView.Adapter<AdapterAllLoss.ViewHold
                         // return Integer.valueOf(obj2.getId()).compareTo(obj1.getId()); // To compare integer values
                     }
                 });
+            } else {
+                holder.km.setText("No location");
             }
         }
+
         holder.description.setText(loss.getmDescription());
 
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {

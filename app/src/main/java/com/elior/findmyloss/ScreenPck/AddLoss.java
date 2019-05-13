@@ -127,6 +127,9 @@ public class AddLoss extends AppCompatActivity implements NavigationView.OnNavig
                             firebase.child(time).child("lat").setValue(location.getLatitude());
                             firebase.child(time).child("lng").setValue(location.getLongitude());
                         }
+                    } else {
+                        firebase.child(time).child("lat").setValue("No");
+                        firebase.child(time).child("lng").setValue("location");
                     }
                 }
 

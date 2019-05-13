@@ -4,7 +4,9 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
+import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Handler;
 import android.os.VibrationEffect;
@@ -82,6 +84,9 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
     private Location mLastLocation;
     private static final String TAG = "MyLocation";
     private GoogleApiClient mGoogleApiClient;
+    private Location location;
+    private LocationManager locationManager;
+    private Criteria criteria;
     private RecyclerView recyclerView;
     private AdapterAllLoss adapter;
     private android.support.v7.widget.SearchView searchView;
@@ -328,11 +333,49 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         if (id == R.id.add_loss) {
-            Intent intentAddLoss = new Intent(AllLoss.this, AddLoss.class);
-            startActivity(intentAddLoss);
+            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            criteria = new Criteria();
+            String provider = locationManager.getBestProvider(criteria, true);
+            if (ActivityCompat.checkSelfPermission(AllLoss.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.checkSelfPermission(AllLoss.this, Manifest.permission.ACCESS_COARSE_LOCATION);
+            }// TODO: Consider calling
+//    ActivityCompat#requestPermissions
+// here to request the missing permissions, and then overriding
+//   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+//                                          int[] grantResults)
+// to handle the case where the user grants the permission. See the documentation
+// for ActivityCompat#requestPermissions for more details.
+            if (provider != null) {
+                location = locationManager.getLastKnownLocation(provider);
+                if (location != null) {
+                    Intent intentAddLoss = new Intent(AllLoss.this, AddLoss.class);
+                    startActivity(intentAddLoss);
+                } else {
+                    Toast.makeText(AllLoss.this, "You need last location to move to 'Add loss' screen", Toast.LENGTH_LONG).show();
+                }
+            }
         } else if (id == R.id.nearby_loss) {
-            Intent intentMyNearLoss = new Intent(AllLoss.this, NearbyLoss.class);
-            startActivity(intentMyNearLoss);
+            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            criteria = new Criteria();
+            String provider = locationManager.getBestProvider(criteria, true);
+            if (ActivityCompat.checkSelfPermission(AllLoss.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.checkSelfPermission(AllLoss.this, Manifest.permission.ACCESS_COARSE_LOCATION);
+            }// TODO: Consider calling
+//    ActivityCompat#requestPermissions
+// here to request the missing permissions, and then overriding
+//   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+//                                          int[] grantResults)
+// to handle the case where the user grants the permission. See the documentation
+// for ActivityCompat#requestPermissions for more details.
+            if (provider != null) {
+                location = locationManager.getLastKnownLocation(provider);
+                if (location != null) {
+                    Intent intentMyNearLoss = new Intent(AllLoss.this, NearbyLoss.class);
+                    startActivity(intentMyNearLoss);
+                } else {
+                    Toast.makeText(AllLoss.this, "You need last location to move to 'Nearby loss' screen", Toast.LENGTH_LONG).show();
+                }
+            }
         } else if (id == R.id.my_radius) {
             Intent intentRadius = new Intent(AllLoss.this, SettingsActivity.class);
             startActivity(intentRadius);

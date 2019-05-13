@@ -78,8 +78,8 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="210dp"
-                        android:layout_marginLeft="210dp"
+                        android:layout_marginStart="200dp"
+                        android:layout_marginLeft="200dp"
                         android:orientation="horizontal">
 
                         <TextView
@@ -135,8 +135,8 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="210dp"
-                        android:layout_marginLeft="210dp"
+                        android:layout_marginStart="200dp"
+                        android:layout_marginLeft="200dp"
                         android:orientation="horizontal">
 
                         <TextView
