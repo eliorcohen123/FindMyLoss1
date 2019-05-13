@@ -160,7 +160,7 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
         recyclerView = findViewById(R.id.myListAllLost);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        ItemDecoration itemDecoration = new ItemDecoration(20);
+        ItemDecoration itemDecoration = new ItemDecoration(5);
         recyclerView.addItemDecoration(itemDecoration);
 
         arrayListAllLoss = new ArrayList<>();

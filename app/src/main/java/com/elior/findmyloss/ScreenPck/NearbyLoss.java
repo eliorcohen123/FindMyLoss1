@@ -122,7 +122,7 @@ public class NearbyLoss extends AppCompatActivity implements NavigationView.OnNa
         recyclerView = findViewById(R.id.myListNearbyLoss);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        ItemDecoration itemDecoration = new ItemDecoration(20);
+        ItemDecoration itemDecoration = new ItemDecoration(5);
         recyclerView.addItemDecoration(itemDecoration);
 
         arrayListMyNearLoss = new ArrayList<>();
