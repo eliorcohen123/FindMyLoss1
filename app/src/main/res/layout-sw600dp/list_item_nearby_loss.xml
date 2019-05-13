@@ -30,21 +30,19 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/image1"
-                android:layout_width="75dp"
-                android:layout_height="125dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
-                android:scaleType="fitXY" />
+            <!--<ImageView-->
+            <!--android:id="@+id/image1"-->
+            <!--android:layout_width="75dp"-->
+            <!--android:layout_height="125dp"-->
+            <!--android:layout_marginStart="5dp"-->
+            <!--android:layout_marginLeft="5dp"-->
+            <!--android:layout_marginTop="5dp"-->
+            <!--android:scaleType="fitXY" />-->
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="175dp"
-                android:orientation="vertical"
-                android:paddingStart="16dp"
-                android:paddingLeft="16dp">
+                android:orientation="vertical">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -55,6 +53,8 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="50dp"
+                        android:layout_marginLeft="50dp"
                         android:orientation="horizontal">
 
                         <TextView
@@ -78,8 +78,8 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="225dp"
-                        android:layout_marginLeft="225dp"
+                        android:layout_marginStart="290dp"
+                        android:layout_marginLeft="290dp"
                         android:orientation="horizontal">
 
                         <TextView
@@ -110,6 +110,8 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="50dp"
+                        android:layout_marginLeft="50dp"
                         android:orientation="horizontal">
 
                         <TextView
@@ -133,8 +135,8 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="225dp"
-                        android:layout_marginLeft="225dp"
+                        android:layout_marginStart="290dp"
+                        android:layout_marginLeft="290dp"
                         android:orientation="horizontal">
 
                         <TextView
