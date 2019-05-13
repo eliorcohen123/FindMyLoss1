@@ -126,8 +126,8 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        swipeRefreshLayout = findViewById(R.id.swipe_containerFrag);  // ID of the SwipeRefreshLayout of FragmentSearch
-        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorOrange));  // Colors of the SwipeRefreshLayout of FragmentSearch
+        swipeRefreshLayout = findViewById(R.id.swipe_containerFrag);
+        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorOrange));
         // Refresh the MapDBHelper of app in ListView of MainActivity
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
