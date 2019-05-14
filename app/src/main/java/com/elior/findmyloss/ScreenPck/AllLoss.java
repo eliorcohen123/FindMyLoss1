@@ -285,6 +285,8 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
                 }
             }
         });
+
+        AppRater.app_launched(this);
     }
 
     @Override
