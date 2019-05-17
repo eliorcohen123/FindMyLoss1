@@ -35,6 +35,6 @@
     <string name="hintSearch">Search a name…</string>
     <string name="item_removed_message">Lost was added…</string>
     <string name="undo">OK</string>
-    <string name="Firebase_Key">API_KEY</string>
     <string name="default_notification_channel_id">1</string>
+    <string name="loading_data">Loading Data…</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.elior.findmyloss.ScreenPck;
 
+import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -32,13 +33,10 @@ import com.elior.findmyloss.AdapterPck.AdapterAllLoss;
 import com.elior.findmyloss.OthersPck.ItemDecoration;
 import com.elior.findmyloss.OthersPck.Loss;
 import com.elior.findmyloss.R;
-import com.firebase.client.DataSnapshot;
-import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -68,12 +66,14 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class AllLoss extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
-    private Firebase firebase;
-    private ArrayList<Loss> arrayListAllLoss;
+    private List<Loss> arrayListAllLoss;
     private DrawerLayout drawer;
     private static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     private static final int MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION = 33;
@@ -91,6 +91,8 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
     private AdapterAllLoss adapter;
     private android.support.v7.widget.SearchView searchView;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private ProgressDialog progressDialog;
+    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,8 +109,6 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
         findViewById(R.id.myButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // open right drawer
-
                 if (drawer.isDrawerOpen(GravityCompat.END)) {
                     drawer.closeDrawer(GravityCompat.END);
                 } else
@@ -153,9 +153,6 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
             }
         });
 
-        Firebase.setAndroidContext(this);
-        firebase = new Firebase(getString(R.string.Firebase_Key));
-
         recyclerView = findViewById(R.id.myListAllLost);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -164,42 +161,42 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
 
         arrayListAllLoss = new ArrayList<>();
 
-        firebase.addValueEventListener(new ValueEventListener() {
+        progressDialog = new ProgressDialog(AllLoss.this);
+        progressDialog.setMessage(getString(R.string.loading_data));
+        progressDialog.show();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.addValueEventListener(new com.google.firebase.database.ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(com.google.firebase.database.DataSnapshot snapshot) {
                 try {
                     arrayListAllLoss.clear();
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        Double lat = (Double) snapshot.child("lat").getValue();
-                        Double lng = (Double) snapshot.child("lng").getValue();
-                        arrayListAllLoss.add(new Loss(snapshot.child("userName").getValue() + "",
-                                snapshot.child("phone").getValue() + "",
-                                snapshot.child("place").getValue() + "",
-                                snapshot.child("date").getValue() + "",
-                                lat,
-                                lng,
-                                snapshot.child("description").getValue() + ""));
-                        adapter = new AdapterAllLoss(AllLoss.this, arrayListAllLoss);
-                        recyclerView.setAdapter(adapter);
+                    for (com.google.firebase.database.DataSnapshot postSnapshot : snapshot.getChildren()) {
+                        Loss loss = postSnapshot.getValue(Loss.class);
+                        arrayListAllLoss.add(loss);
                     }
+                    adapter = new AdapterAllLoss(AllLoss.this, arrayListAllLoss);
+                    recyclerView.setAdapter(adapter);
                 } catch (Exception e) {
 
                 }
+
+                progressDialog.dismiss();
             }
 
             @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
+            public void onCancelled(DatabaseError databaseError) {
+                progressDialog.dismiss();
             }
         });
 
+        // Start all of check location
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         buildGoogleApiClient();
 
         if (mGoogleApiClient != null) {
             mGoogleApiClient.connect();
         } else
-            Toast.makeText(this, "האינטרנט לא מחובר...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Not connected...", Toast.LENGTH_SHORT).show();
 
         String locationProviders = Settings.Secure.getString(getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
         if (locationProviders == null || locationProviders.equals("")) {
@@ -226,7 +223,7 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
             // Permission is not granted
             // Should we show an explanation?
             if (ActivityCompat.shouldShowRequestPermissionRationale(AllLoss.this, Manifest.permission.ACCESS_COARSE_LOCATION)) {
-//                Toast.makeText(MainActivity.this, "אני צריך את המיקום שלך בשביל להשתמש בתכני המיקום...", Toast.LENGTH_LONG).show();
+//                Toast.makeText(MainActivity.this, "Please I need yor location to...", Toast.LENGTH_LONG).show();
                 final Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
@@ -263,7 +260,7 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
                 // location requests here.
                 // ...
                 LocationSettingsStates locationSettingsStates = locationSettingsResponse.getLocationSettingsStates();
-//                Toast.makeText(MainActivity.this, "התחברות מוצלחת" + locationSettingsStates, Toast.LENGTH_LONG).show();
+//                Toast.makeText(MainActivity.this, "Great Success" + locationSettingsStates, Toast.LENGTH_LONG).show();
             }
         });
 
@@ -397,11 +394,12 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
         return true;
     }
 
+    // Resume all of check location
     @Override
     protected void onActivityResult(final int requestCode, int resultCode, @Nullable Intent data) {
         switch (requestCode) {
             case REQUEST_CHECK_SETTINGS:
-//                Toast.makeText(MainActivity.this, "תוצאת בקשת בדיקת הגדרות" + requestCode, Toast.LENGTH_LONG).show();
+//                Toast.makeText(MainActivity.this, "REQUEST_CHECK_SETTINGS result" + requestCode, Toast.LENGTH_LONG).show();
                 break;
         }
     }
@@ -446,7 +444,8 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
 //    }
 
     @Override
-    public void onRequestPermissionsResult(final int requestCode, @NonNull String[] permissions, @NonNull final int[] grantResults) {
+    public void onRequestPermissionsResult(final int requestCode,
+                                           @NonNull String[] permissions, @NonNull final int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION: {
                 // If request is cancelled, the result arrays are empty.
@@ -505,7 +504,8 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
 
     @Override
     public void onConnectionFailed(ConnectionResult arg0) {
-        Toast.makeText(this, "ההתחברות לאינטרנט נכשלה...", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Failed to connect...", Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
@@ -530,7 +530,8 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
 
     @Override
     public void onConnectionSuspended(int arg0) {
-        Toast.makeText(this, "ההתחברות לאינטרנט מושהית...", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Connection suspended...", Toast.LENGTH_SHORT).show();
+
     }
 
     protected synchronized void buildGoogleApiClient() {
@@ -596,6 +597,7 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
                 });
     }
 
+    // onStart
     @Override
     public void onStart() {
         super.onStart();
@@ -606,6 +608,21 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
             Log.i(TAG, "Inside onStart function; getting location when permission is already available");
             getLastLocation();
         }
+    }
+
+    // onResume
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startLocationUpdates();
+    }
+
+    // onPause
+    @Override
+    protected void onPause() {
+        super.onPause();
+        startLocationUpdates();
+//        stopLocationUpdates();
     }
 
 }

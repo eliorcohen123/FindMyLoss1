@@ -9,8 +9,13 @@ public class Loss {
     private double mLat;
     private double mLng;
     private String mDescription;
+    private String mImage;
 
-    public Loss(String mName, String mPhone, String mPlace, String mDate, double mLat, double mLng, String mDescription) {
+    public Loss() {
+
+    }
+
+    public Loss(String mName, String mPhone, String mPlace, String mDate, double mLat, double mLng, String mDescription, String mImage) {
         this.mName = mName;
         this.mPhone = mPhone;
         this.mPlace = mPlace;
@@ -18,6 +23,7 @@ public class Loss {
         this.mLat = mLat;
         this.mLng = mLng;
         this.mDescription = mDescription;
+        this.mImage = mImage;
     }
 
     public String getmName() {
@@ -74,6 +80,14 @@ public class Loss {
 
     public void setmDescription(String mDescription) {
         this.mDescription = mDescription;
+    }
+
+    public String getmImage() {
+        return mImage;
+    }
+
+    public void setmImage(String mImage) {
+        this.mImage = mImage;
     }
 
 }

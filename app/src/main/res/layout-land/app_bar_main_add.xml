@@ -8,96 +8,118 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:text="Add Your Loss"
-            android:textColor="@color/lightBrown"
-            android:textSize="30sp" />
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="15dp"
-            android:orientation="horizontal">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:text="Add Your Loss"
+                android:textColor="@color/lightBrown"
+                android:textSize="30sp" />
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:orientation="vertical">
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
 
-                <EditText
-                    android:id="@+id/userNameWrite"
-                    android:layout_width="180dp"
-                    android:layout_height="50dp"
-                    android:background="@color/colorLightBlue"
-                    android:hint="Name:"
-                    android:maxLength="10"
-                    android:textColor="@color/brown"
-                    android:textColorHint="@android:color/darker_gray" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:orientation="vertical">
 
-                <EditText
-                    android:id="@+id/phoneWrite"
-                    android:layout_width="180dp"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/colorLightBlue"
-                    android:hint="Phone:"
-                    android:inputType="number"
-                    android:maxLength="10"
-                    android:textColor="@color/brown"
-                    android:textColorHint="@android:color/darker_gray" />
+                    <EditText
+                        android:id="@+id/userNameWrite"
+                        android:layout_width="180dp"
+                        android:layout_height="50dp"
+                        android:background="@color/colorLightBlue"
+                        android:hint="Name:"
+                        android:maxLength="10"
+                        android:textColor="@color/brown"
+                        android:textColorHint="@android:color/darker_gray" />
 
-                <EditText
-                    android:id="@+id/placeWrite"
-                    android:layout_width="180dp"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/colorLightBlue"
-                    android:hint="Place:"
-                    android:maxLength="10"
-                    android:textColor="@color/brown"
-                    android:textColorHint="@android:color/darker_gray" />
+                    <EditText
+                        android:id="@+id/phoneWrite"
+                        android:layout_width="180dp"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/colorLightBlue"
+                        android:hint="Phone:"
+                        android:inputType="number"
+                        android:maxLength="10"
+                        android:textColor="@color/brown"
+                        android:textColorHint="@android:color/darker_gray" />
+
+                    <EditText
+                        android:id="@+id/placeWrite"
+                        android:layout_width="180dp"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/colorLightBlue"
+                        android:hint="Place:"
+                        android:maxLength="10"
+                        android:textColor="@color/brown"
+                        android:textColorHint="@android:color/darker_gray" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/descriptionWrite"
+                        android:layout_width="180dp"
+                        android:layout_height="170dp"
+                        android:background="@color/colorLightBlue"
+                        android:gravity="start"
+                        android:hint="Description:"
+                        android:maxLength="200"
+                        android:textColor="@color/brown"
+                        android:textColorHint="@android:color/darker_gray" />
+                </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
-                android:orientation="vertical">
+            <ImageView
+                android:id="@+id/imageSelect"
+                android:layout_width="200dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center" />
 
-                <EditText
-                    android:id="@+id/descriptionWrite"
-                    android:layout_width="180dp"
-                    android:layout_height="170dp"
-                    android:background="@color/colorLightBlue"
-                    android:gravity="start"
-                    android:hint="Description:"
-                    android:maxLength="200"
-                    android:textColor="@color/brown"
-                    android:textColorHint="@android:color/darker_gray" />
-            </LinearLayout>
+            <Button
+                android:id="@+id/ButtonChooseImage"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/custom_button1"
+                android:text="Choose Image"
+                android:textColor="@color/colorLightBlue" />
+
+            <Button
+                android:id="@+id/ButtonUploadImage"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/custom_button1"
+                android:text="Upload\n Image + Data"
+                android:textColor="@color/colorLightBlue" />
         </LinearLayout>
-
-        <Button
-            android:id="@+id/btnWrite"
-            android:layout_width="100dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/custom_button1"
-            android:text="Add Lost"
-            android:textColor="@color/colorLightBlue" />
-    </LinearLayout>
+    </ScrollView>
 </RelativeLayout>

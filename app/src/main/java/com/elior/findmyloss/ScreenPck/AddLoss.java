@@ -1,11 +1,17 @@
 package com.elior.findmyloss.ScreenPck;
 
 import android.Manifest;
+import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -19,24 +25,40 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.elior.findmyloss.OthersPck.Loss;
 import com.elior.findmyloss.R;
-import com.firebase.client.Firebase;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.IOException;
 import java.util.Date;
 
 public class AddLoss extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private EditText userNameWrite, phoneWrite, placeWrite, descriptionWrite;
-    private Firebase firebase;
-    private Button btnWrite;
+    private Button ChooseButton, UploadButton;
     private Location location;
     private LocationManager locationManager;
     private Criteria criteria;
     private DrawerLayout drawer;
     private CoordinatorLayout coordinatorLayout;
+    private String Storage_Path = "My_Storage";
+    private ImageView SelectImage;
+    private Uri FilePathUri;
+    private StorageReference storageReference;
+    private DatabaseReference databaseReference;
+    private int Image_Request_Code = 7;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +73,6 @@ public class AddLoss extends AppCompatActivity implements NavigationView.OnNavig
         findViewById(R.id.myButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // open right drawer
-
                 if (drawer.isDrawerOpen(GravityCompat.END)) {
                     drawer.closeDrawer(GravityCompat.END);
                 } else
@@ -70,80 +90,139 @@ public class AddLoss extends AppCompatActivity implements NavigationView.OnNavig
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        storageReference = FirebaseStorage.getInstance().getReference();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+
         userNameWrite = findViewById(R.id.userNameWrite);
         phoneWrite = findViewById(R.id.phoneWrite);
         placeWrite = findViewById(R.id.placeWrite);
         descriptionWrite = findViewById(R.id.descriptionWrite);
-        btnWrite = findViewById(R.id.btnWrite);
+        ChooseButton = findViewById(R.id.ButtonChooseImage);
+        UploadButton = findViewById(R.id.ButtonUploadImage);
+        SelectImage = findViewById(R.id.imageSelect);
         coordinatorLayout = findViewById(R.id.myContent);
 
-        Firebase.setAndroidContext(this);
-
-        btnWrite.setOnClickListener(new View.OnClickListener() {
+        progressDialog = new ProgressDialog(AddLoss.this);
+        ChooseButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Date date = new Date();
-                String time = date.toString();
-                if (!TextUtils.isEmpty(userNameWrite.getText()) && !TextUtils.isEmpty(phoneWrite.getText())
-                        && !TextUtils.isEmpty(placeWrite.getText()) && !TextUtils.isEmpty(descriptionWrite.getText())) {  // If the text are not empty the movie will not be approved
-                    firebase = new Firebase(getString(R.string.Firebase_Key));
-                    firebase.child(time).child("userName").setValue(userNameWrite.getText().toString());
-                    firebase.child(time).child("phone").setValue(phoneWrite.getText().toString());
-                    firebase.child(time).child("place").setValue(placeWrite.getText().toString());
-                    firebase.child(time).child("description").setValue(descriptionWrite.getText().toString());
-                    Snackbar.make(coordinatorLayout, R.string.item_removed_message, Snackbar.LENGTH_LONG)
-                            .setAction(R.string.undo, new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    // Respond to the click, such as by undoing the modification that caused
-                                    // this message to be displayed
-                                }
-                            })
-                            .show();
-                }
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Please Select Image"), Image_Request_Code);
+            }
+        });
 
-                if (TextUtils.isEmpty(userNameWrite.getText())) {  // If the text are empty the movie will not be approved
-                    userNameWrite.setError("Name is required!");  // Print text of error if the text are empty
-                }
+        UploadButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                UploadImageFileToFirebaseStorage();
+            }
+        });
+    }
 
-                locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                criteria = new Criteria();
-                String provider = locationManager.getBestProvider(criteria, true);
-                if (ActivityCompat.checkSelfPermission(AddLoss.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.checkSelfPermission(AddLoss.this, Manifest.permission.ACCESS_COARSE_LOCATION);
-                }// TODO: Consider calling
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Image_Request_Code && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            FilePathUri = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), FilePathUri);
+                SelectImage.setImageBitmap(bitmap);
+                ChooseButton.setText("Image Selected");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public String GetFileExtension(Uri uri) {
+        ContentResolver contentResolver = getContentResolver();
+        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
+    }
+
+    public void UploadImageFileToFirebaseStorage() {
+        if (FilePathUri != null) {
+            if (!TextUtils.isEmpty(userNameWrite.getText()) && !TextUtils.isEmpty(phoneWrite.getText())
+                    && !TextUtils.isEmpty(placeWrite.getText()) && !TextUtils.isEmpty(descriptionWrite.getText())) {  // If the text are not empty the movie will not be approved
+                progressDialog.setTitle("Data is Uploading...");
+                progressDialog.show();
+            }
+            final StorageReference storageReference2nd = storageReference.child(Storage_Path + System.currentTimeMillis() + "." + GetFileExtension(FilePathUri));
+            storageReference2nd.putFile(FilePathUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    storageReference2nd.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                            criteria = new Criteria();
+                            String provider = locationManager.getBestProvider(criteria, true);
+                            if (ActivityCompat.checkSelfPermission(AddLoss.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                                ActivityCompat.checkSelfPermission(AddLoss.this, Manifest.permission.ACCESS_COARSE_LOCATION);
+                            }// TODO: Consider calling
 //    ActivityCompat#requestPermissions
 // here to request the missing permissions, and then overriding
 //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
 //                                          int[] grantResults)
 // to handle the case where the user grants the permission. See the documentation
 // for ActivityCompat#requestPermissions for more details.
-                if (provider != null) {
-                    location = locationManager.getLastKnownLocation(provider);
-                    if (location != null) {
-                        if (!TextUtils.isEmpty(userNameWrite.getText()) && !TextUtils.isEmpty(phoneWrite.getText())
-                                && !TextUtils.isEmpty(placeWrite.getText()) && !TextUtils.isEmpty(descriptionWrite.getText())) {  // If the text are not empty the movie will not be approved
-                            firebase = new Firebase(getString(R.string.Firebase_Key));
-                            firebase.child(time).child("date").setValue(time);
-                            firebase.child(time).child("lat").setValue(location.getLatitude());
-                            firebase.child(time).child("lng").setValue(location.getLongitude());
+                            if (provider != null) {
+                                location = locationManager.getLastKnownLocation(provider);
+                                if (location != null) {
+                                    if (!TextUtils.isEmpty(userNameWrite.getText()) && !TextUtils.isEmpty(phoneWrite.getText())
+                                            && !TextUtils.isEmpty(placeWrite.getText()) && !TextUtils.isEmpty(descriptionWrite.getText())) {  // If the text are not empty the movie will not be approved
+                                        Date date = new Date();
+                                        String date1 = date.toString().trim();
+                                        double lat = location.getLatitude();
+                                        double lng = location.getLongitude();
+                                        String name = userNameWrite.getText().toString().trim();
+                                        String phone = phoneWrite.getText().toString().trim();
+                                        String place = placeWrite.getText().toString().trim();
+                                        String description = descriptionWrite.getText().toString().trim();
+
+                                        progressDialog.dismiss();
+                                        Toast.makeText(AddLoss.this, "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
+                                        @SuppressWarnings("VisibleForTests")
+                                        Loss loss = new Loss(name, phone, place, date1, lat, lng, description, uri.toString());
+                                        String imageUploadId = databaseReference.push().getKey();
+                                        databaseReference.child(imageUploadId).setValue(loss);
+                                        Snackbar.make(coordinatorLayout, R.string.item_removed_message, Snackbar.LENGTH_LONG)
+                                                .setAction(R.string.undo, new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View v) {
+                                                        // Respond to the click, such as by undoing the modification that caused
+                                                        // this message to be displayed
+                                                    }
+                                                })
+                                                .show();
+                                    }
+                                }
+                            }
+
+                            if (TextUtils.isEmpty(userNameWrite.getText())) {  // If the text are empty the movie will not be approved
+                                userNameWrite.setError("Name is required!");  // Print text of error if the text are empty
+                            }
+
+                            if (TextUtils.isEmpty(phoneWrite.getText())) {  // If the text are empty the movie will not be approved
+                                phoneWrite.setError("Phone is required!");  // Print text of error if the text are empty
+                            }
+
+                            if (TextUtils.isEmpty(placeWrite.getText())) {  // If the text are empty the movie will not be approved
+                                placeWrite.setError("Place is required!");  // Print text of error if the text are empty
+                            }
+
+                            if (TextUtils.isEmpty(descriptionWrite.getText())) {  // If the text are empty the movie will not be approved
+                                descriptionWrite.setError("Description is required!");  // Print text of error if the text are empty
+                            }
                         }
-                    }
+                    });
                 }
-
-                if (TextUtils.isEmpty(phoneWrite.getText())) {  // If the text are empty the movie will not be approved
-                    phoneWrite.setError("Phone is required!");  // Print text of error if the text are empty
-                }
-
-                if (TextUtils.isEmpty(placeWrite.getText())) {  // If the text are empty the movie will not be approved
-                    placeWrite.setError("Place is required!");  // Print text of error if the text are empty
-                }
-
-                if (TextUtils.isEmpty(descriptionWrite.getText())) {  // If the text are empty the movie will not be approved
-                    descriptionWrite.setError("Description is required!");  // Print text of error if the text are empty
-                }
-            }
-        });
+            });
+        } else {
+            Toast.makeText(AddLoss.this, "Please Select Image", Toast.LENGTH_LONG).show();
+        }
     }
 
     @SuppressWarnings("StatementWithEmptyBody")

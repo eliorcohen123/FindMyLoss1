@@ -1,5 +1,6 @@
 package com.elior.findmyloss.ScreenPck;
 
+import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
@@ -22,12 +23,12 @@ import com.elior.findmyloss.AdapterPck.AdapterNearbyLoss;
 import com.elior.findmyloss.OthersPck.ItemDecoration;
 import com.elior.findmyloss.OthersPck.Loss;
 import com.elior.findmyloss.R;
-import com.firebase.client.DataSnapshot;
-import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.Manifest;
 import android.content.Context;
@@ -45,8 +46,7 @@ import android.widget.Toast;
 
 public class NearbyLoss extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private Firebase firebase;
-    private ArrayList<Loss> arrayListMyNearLoss;
+    private List<Loss> arrayListMyNearLoss;
     private Location location;
     private LocationManager locationManager;
     private Criteria criteria;
@@ -55,6 +55,8 @@ public class NearbyLoss extends AppCompatActivity implements NavigationView.OnNa
     private android.support.v7.widget.SearchView searchView;
     private DrawerLayout drawer;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private ProgressDialog progressDialog;
+    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +71,6 @@ public class NearbyLoss extends AppCompatActivity implements NavigationView.OnNa
         findViewById(R.id.myButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // open right drawer
-
                 if (drawer.isDrawerOpen(GravityCompat.END)) {
                     drawer.closeDrawer(GravityCompat.END);
                 } else
@@ -115,9 +115,6 @@ public class NearbyLoss extends AppCompatActivity implements NavigationView.OnNa
             }
         });
 
-        Firebase.setAndroidContext(this);
-        firebase = new Firebase(getString(R.string.Firebase_Key));
-
         recyclerView = findViewById(R.id.myListNearbyLoss);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -126,16 +123,20 @@ public class NearbyLoss extends AppCompatActivity implements NavigationView.OnNa
 
         arrayListMyNearLoss = new ArrayList<>();
 
-        firebase.addValueEventListener(new ValueEventListener() {
+        progressDialog = new ProgressDialog(NearbyLoss.this);
+        progressDialog.setMessage(getString(R.string.loading_data));
+        progressDialog.show();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.addValueEventListener(new com.google.firebase.database.ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(com.google.firebase.database.DataSnapshot snapshot) {
                 try {
                     arrayListMyNearLoss.clear();
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(NearbyLoss.this);
                     int myRadius = prefs.getInt("seek", 5000);
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        Double lat1 = (Double) snapshot.child("lat").getValue();
-                        Double lng1 = (Double) snapshot.child("lng").getValue();
+                    for (com.google.firebase.database.DataSnapshot postSnapshot : snapshot.getChildren()) {
+                        Double lat1 = (Double) postSnapshot.child("mLat").getValue();
+                        Double lng1 = (Double) postSnapshot.child("mLng").getValue();
                         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
                         criteria = new Criteria();
                         String provider = locationManager.getBestProvider(criteria, true);
@@ -160,29 +161,24 @@ public class NearbyLoss extends AppCompatActivity implements NavigationView.OnNa
                                 locationB.setLongitude(location.getLongitude());
                                 distanceMe = locationA.distanceTo(locationB);  // in km
                                 if (distanceMe < myRadius) {
-                                    Double lat = (Double) snapshot.child("lat").getValue();
-                                    Double lng = (Double) snapshot.child("lng").getValue();
-                                    arrayListMyNearLoss.add(new Loss(snapshot.child("userName").getValue() + "",
-                                            snapshot.child("phone").getValue() + "",
-                                            snapshot.child("place").getValue() + "",
-                                            snapshot.child("date").getValue() + "",
-                                            lat,
-                                            lng,
-                                            snapshot.child("description").getValue() + ""));
-                                    adapter = new AdapterNearbyLoss(NearbyLoss.this, arrayListMyNearLoss);
-                                    recyclerView.setAdapter(adapter);
+                                    Loss loss = postSnapshot.getValue(Loss.class);
+                                    arrayListMyNearLoss.add(loss);
                                 }
                             }
                         }
                     }
+                    adapter = new AdapterNearbyLoss(NearbyLoss.this, arrayListMyNearLoss);
+                    recyclerView.setAdapter(adapter);
                 } catch (Exception e) {
 
                 }
+
+                progressDialog.dismiss();
             }
 
             @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
+            public void onCancelled(DatabaseError databaseError) {
+                progressDialog.dismiss();
             }
         });
     }

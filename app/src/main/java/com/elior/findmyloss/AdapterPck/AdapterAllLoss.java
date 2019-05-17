@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -29,6 +30,7 @@ import android.location.LocationManager;
 import android.support.v4.app.ActivityCompat;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.elior.findmyloss.OthersPck.Loss;
 import com.elior.findmyloss.R;
 
@@ -37,6 +39,7 @@ public class AdapterAllLoss extends RecyclerView.Adapter<AdapterAllLoss.ViewHold
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
 
         private TextView name, phone, place, km, description;
+        private ImageView imageView;
         private RelativeLayout relativeLayout;
 
         public ViewHolder(View itemView) {
@@ -46,6 +49,7 @@ public class AdapterAllLoss extends RecyclerView.Adapter<AdapterAllLoss.ViewHold
             place = itemView.findViewById(R.id.place1);
             km = itemView.findViewById(R.id.km1);
             description = itemView.findViewById(R.id.description1);
+            imageView = itemView.findViewById(R.id.image1);
             relativeLayout = itemView.findViewById(R.id.relative1);
             itemView.setOnCreateContextMenuListener(this);
         }
@@ -181,6 +185,8 @@ public class AdapterAllLoss extends RecyclerView.Adapter<AdapterAllLoss.ViewHold
                 }
             }
         });
+
+        Glide.with(mInflater.getContext()).load(loss.getmImage()).into(holder.imageView);
     }
 
     @Override

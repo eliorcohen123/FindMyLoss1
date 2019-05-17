@@ -30,31 +30,31 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <!--<ImageView-->
-            <!--android:id="@+id/image1"-->
-            <!--android:layout_width="75dp"-->
-            <!--android:layout_height="125dp"-->
-            <!--android:layout_marginStart="5dp"-->
-            <!--android:layout_marginLeft="5dp"-->
-            <!--android:layout_marginTop="5dp"-->
-            <!--android:scaleType="fitXY" />-->
+            <ImageView
+                android:id="@+id/image1"
+                android:layout_width="75dp"
+                android:layout_height="100dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:scaleType="fitXY" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="175dp"
+                android:layout_height="170dp"
                 android:orientation="vertical">
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:orientation="horizontal">
+                    android:layout_marginTop="2dp"
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginLeft="20dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginLeft="5dp"
                         android:orientation="horizontal">
 
                         <TextView
@@ -64,7 +64,7 @@
                             android:gravity="center"
                             android:text="Name: "
                             android:textColor="@color/colorBrown"
-                            android:textSize="20sp" />
+                            android:textSize="15sp" />
 
                         <TextView
                             android:id="@+id/name1"
@@ -78,8 +78,8 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="200dp"
-                        android:layout_marginLeft="200dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginLeft="5dp"
                         android:orientation="horizontal">
 
                         <TextView
@@ -89,7 +89,7 @@
                             android:gravity="center"
                             android:text="Phone: "
                             android:textColor="@color/colorBrown"
-                            android:textSize="20sp" />
+                            android:textSize="15sp" />
 
                         <TextView
                             android:id="@+id/phone1"
@@ -99,19 +99,18 @@
                             android:textColor="@color/colorWhite"
                             android:textSize="15sp" />
                     </LinearLayout>
-                </RelativeLayout>
+                </LinearLayout>
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginLeft="20dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginLeft="5dp"
                         android:orientation="horizontal">
 
                         <TextView
@@ -121,7 +120,7 @@
                             android:gravity="center"
                             android:text="Place: "
                             android:textColor="@color/colorBrown"
-                            android:textSize="20sp" />
+                            android:textSize="15sp" />
 
                         <TextView
                             android:id="@+id/place1"
@@ -135,8 +134,8 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="200dp"
-                        android:layout_marginLeft="200dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginLeft="5dp"
                         android:orientation="horizontal">
 
                         <TextView
@@ -146,7 +145,7 @@
                             android:gravity="center"
                             android:text="Distance: "
                             android:textColor="@color/colorBrown"
-                            android:textSize="20sp" />
+                            android:textSize="15sp" />
 
                         <TextView
                             android:id="@+id/km1"
@@ -156,7 +155,7 @@
                             android:textColor="@color/colorWhite"
                             android:textSize="15sp" />
                     </LinearLayout>
-                </RelativeLayout>
+                </LinearLayout>
 
                 <ImageView
                     android:layout_width="match_parent"
@@ -169,6 +168,8 @@
                     android:id="@+id/description2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginLeft="5dp"
                     android:layout_marginTop="3dp"
                     android:text="Description:"
                     android:textColor="@color/design_default_color_primary"
@@ -177,8 +178,9 @@
                 <TextView
                     android:id="@+id/description1"
                     android:layout_width="match_parent"
-                    android:layout_height="70dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_height="63dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginLeft="5dp"
                     android:textColor="@color/colorWhite"
                     android:textSize="15sp" />
             </LinearLayout>
