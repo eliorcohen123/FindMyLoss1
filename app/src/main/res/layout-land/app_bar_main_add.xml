@@ -98,7 +98,8 @@
                 android:id="@+id/imageSelect"
                 android:layout_width="200dp"
                 android:layout_height="100dp"
-                android:layout_gravity="center" />
+                android:layout_gravity="center"
+                android:scaleType="fitXY" />
 
             <Button
                 android:id="@+id/ButtonChooseImage"

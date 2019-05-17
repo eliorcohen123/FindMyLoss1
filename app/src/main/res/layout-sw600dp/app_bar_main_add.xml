@@ -105,13 +105,14 @@
                     android:id="@+id/imageSelect"
                     android:layout_width="200dp"
                     android:layout_height="100dp"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    android:scaleType="fitXY" />
             </LinearLayout>
 
             <Button
                 android:id="@+id/ButtonChooseImage"
-                android:layout_width="100dp"
-                android:layout_height="40dp"
+                android:layout_width="125dp"
+                android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/custom_button1"
@@ -120,8 +121,8 @@
 
             <Button
                 android:id="@+id/ButtonUploadImage"
-                android:layout_width="100dp"
-                android:layout_height="40dp"
+                android:layout_width="125dp"
+                android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"

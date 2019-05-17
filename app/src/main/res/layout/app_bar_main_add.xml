@@ -96,7 +96,8 @@
             android:id="@+id/imageSelect"
             android:layout_width="200dp"
             android:layout_height="100dp"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:scaleType="fitXY" />
 
         <Button
             android:id="@+id/ButtonChooseImage"
@@ -114,6 +115,7 @@
             android:layout_height="40dp"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/custom_button1"
             android:text="Upload\n Image + Data"
             android:textColor="@color/colorLightBlue" />
