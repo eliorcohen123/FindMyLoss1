@@ -104,16 +104,18 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
         getMyLocation();
         initUI();
         showUI();
-
-        AppRater.app_launched(this);
     }
 
     private void initUI() {
         toolbar = findViewById(R.id.toolbar);
         drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
+
         swipeRefreshLayout = findViewById(R.id.swipe_containerFrag);
+
         recyclerView = findViewById(R.id.myListAllLost);
+
+        AppRater.app_launched(this);
     }
 
     private void showUI() {
