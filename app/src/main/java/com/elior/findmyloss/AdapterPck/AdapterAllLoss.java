@@ -49,6 +49,7 @@ public class AdapterAllLoss extends RecyclerView.Adapter<AdapterAllLoss.ViewHold
             description = itemView.findViewById(R.id.description1);
             imageView = itemView.findViewById(R.id.image1);
             relativeLayout = itemView.findViewById(R.id.relative1);
+
             itemView.setOnCreateContextMenuListener(this);
         }
 
