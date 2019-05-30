@@ -59,16 +59,35 @@ public class AddLoss extends AppCompatActivity implements NavigationView.OnNavig
     private DatabaseReference databaseReference;
     private int Image_Request_Code = 7;
     private ProgressDialog progressDialog;
+    private Toolbar toolbar;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_loss);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        initUI();
+        showUI();
+    }
 
+    private void initUI() {
+        toolbar = findViewById(R.id.toolbar);
         drawer = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+
+        userNameWrite = findViewById(R.id.userNameWrite);
+        phoneWrite = findViewById(R.id.phoneWrite);
+        placeWrite = findViewById(R.id.placeWrite);
+        descriptionWrite = findViewById(R.id.descriptionWrite);
+        ChooseButton = findViewById(R.id.ButtonChooseImage);
+        UploadButton = findViewById(R.id.ButtonUploadImage);
+        SelectImage = findViewById(R.id.imageSelect);
+        coordinatorLayout = findViewById(R.id.myContent);
+    }
+
+    private void showUI() {
+        setSupportActionBar(toolbar);
 
         findViewById(R.id.myButton).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,20 +106,10 @@ public class AddLoss extends AppCompatActivity implements NavigationView.OnNavig
 
         toggle.syncState();
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         storageReference = FirebaseStorage.getInstance().getReference();
         databaseReference = FirebaseDatabase.getInstance().getReference();
-
-        userNameWrite = findViewById(R.id.userNameWrite);
-        phoneWrite = findViewById(R.id.phoneWrite);
-        placeWrite = findViewById(R.id.placeWrite);
-        descriptionWrite = findViewById(R.id.descriptionWrite);
-        ChooseButton = findViewById(R.id.ButtonChooseImage);
-        UploadButton = findViewById(R.id.ButtonUploadImage);
-        SelectImage = findViewById(R.id.imageSelect);
-        coordinatorLayout = findViewById(R.id.myContent);
 
         progressDialog = new ProgressDialog(AddLoss.this);
         ChooseButton.setOnClickListener(new View.OnClickListener() {

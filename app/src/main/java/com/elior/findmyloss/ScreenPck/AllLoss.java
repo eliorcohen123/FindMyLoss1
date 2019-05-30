@@ -93,18 +93,31 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
     private SwipeRefreshLayout swipeRefreshLayout;
     private ProgressDialog progressDialog;
     private DatabaseReference databaseReference;
+    private Toolbar toolbar;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_loss);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        getMyLocation();
+        initUI();
+        showUI();
 
-        checkLocationPermission();
+        AppRater.app_launched(this);
+    }
 
+    private void initUI() {
+        toolbar = findViewById(R.id.toolbar);
         drawer = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+        swipeRefreshLayout = findViewById(R.id.swipe_containerFrag);
+        recyclerView = findViewById(R.id.myListAllLost);
+    }
+
+    private void showUI() {
+        setSupportActionBar(toolbar);
 
         findViewById(R.id.myButton).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,10 +136,8 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
 
         toggle.syncState();
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        swipeRefreshLayout = findViewById(R.id.swipe_containerFrag);
         swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorOrange));
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -153,7 +164,6 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
             }
         });
 
-        recyclerView = findViewById(R.id.myListAllLost);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         ItemDecoration itemDecoration = new ItemDecoration(5);
@@ -188,6 +198,10 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
                 progressDialog.dismiss();
             }
         });
+    }
+
+    private void getMyLocation() {
+        checkLocationPermission();
 
         // Start all of check location
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
@@ -282,8 +296,6 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
                 }
             }
         });
-
-        AppRater.app_launched(this);
     }
 
     @Override

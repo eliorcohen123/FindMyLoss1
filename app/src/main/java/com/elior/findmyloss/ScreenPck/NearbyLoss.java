@@ -57,16 +57,28 @@ public class NearbyLoss extends AppCompatActivity implements NavigationView.OnNa
     private SwipeRefreshLayout swipeRefreshLayout;
     private ProgressDialog progressDialog;
     private DatabaseReference databaseReference;
+    private Toolbar toolbar;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nearby_loss);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        initUI();
+        showUI();
+    }
 
+    private void initUI() {
+        toolbar = findViewById(R.id.toolbar);
         drawer = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+        swipeRefreshLayout = findViewById(R.id.swipe_containerFrag);
+        recyclerView = findViewById(R.id.myListNearbyLoss);
+    }
+
+    private void showUI() {
+        setSupportActionBar(toolbar);
 
         findViewById(R.id.myButton).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,10 +97,8 @@ public class NearbyLoss extends AppCompatActivity implements NavigationView.OnNa
 
         toggle.syncState();
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        swipeRefreshLayout = findViewById(R.id.swipe_containerFrag);
         swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorOrange));
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -115,7 +125,6 @@ public class NearbyLoss extends AppCompatActivity implements NavigationView.OnNa
             }
         });
 
-        recyclerView = findViewById(R.id.myListNearbyLoss);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         ItemDecoration itemDecoration = new ItemDecoration(5);

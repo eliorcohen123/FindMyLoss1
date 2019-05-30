@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/background">
 
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/myContent"
@@ -14,7 +15,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
             android:orientation="vertical">
@@ -25,7 +26,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="30dp"
                 android:text="Add Your Loss"
-                android:textColor="@color/lightBrown"
+                android:textColor="@color/white"
                 android:textSize="50sp" />
 
             <LinearLayout
@@ -50,10 +51,10 @@
                             android:id="@+id/userNameWrite"
                             android:layout_width="230dp"
                             android:layout_height="70dp"
-                            android:background="@color/colorLightBlue"
+                            android:background="@drawable/timg"
                             android:hint="Name:"
                             android:maxLength="10"
-                            android:textColor="@color/brown"
+                            android:textColor="@color/colorLightBlue2"
                             android:textColorHint="@android:color/darker_gray" />
 
                         <EditText
@@ -61,11 +62,11 @@
                             android:layout_width="230dp"
                             android:layout_height="70dp"
                             android:layout_marginTop="10dp"
-                            android:background="@color/colorLightBlue"
+                            android:background="@drawable/timg"
                             android:hint="Phone:"
                             android:inputType="number"
                             android:maxLength="10"
-                            android:textColor="@color/brown"
+                            android:textColor="@color/colorLightBlue2"
                             android:textColorHint="@android:color/darker_gray" />
 
                         <EditText
@@ -73,10 +74,10 @@
                             android:layout_width="230dp"
                             android:layout_height="70dp"
                             android:layout_marginTop="10dp"
-                            android:background="@color/colorLightBlue"
+                            android:background="@drawable/timg"
                             android:hint="Place:"
                             android:maxLength="10"
-                            android:textColor="@color/brown"
+                            android:textColor="@color/colorLightBlue2"
                             android:textColorHint="@android:color/darker_gray" />
                     </LinearLayout>
 
@@ -92,11 +93,11 @@
                             android:id="@+id/descriptionWrite"
                             android:layout_width="230dp"
                             android:layout_height="230dp"
-                            android:background="@color/colorLightBlue"
+                            android:background="@drawable/timg"
                             android:gravity="start"
                             android:hint="Description:"
                             android:maxLength="200"
-                            android:textColor="@color/brown"
+                            android:textColor="@color/colorLightBlue2"
                             android:textColorHint="@android:color/darker_gray" />
                     </LinearLayout>
                 </LinearLayout>
@@ -115,9 +116,9 @@
                 android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/custom_button1"
+                android:background="@drawable/custom_button"
                 android:text="Choose Image"
-                android:textColor="@color/colorLightBlue" />
+                android:textColor="@color/white" />
 
             <Button
                 android:id="@+id/ButtonUploadImage"
@@ -126,9 +127,9 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
-                android:background="@drawable/custom_button1"
+                android:background="@drawable/custom_button"
                 android:text="Upload\n Image + Data"
-                android:textColor="@color/colorLightBlue" />
+                android:textColor="@color/white" />
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorLightBlue"
+    android:background="@drawable/background"
     android:orientation="vertical">
 
     <LinearLayout
@@ -18,7 +18,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:text="All losses"
-            android:textColor="@color/lightBrown"
+            android:textColor="@color/colorLightBlue"
             android:textSize="50sp" />
     </LinearLayout>
 
@@ -31,7 +31,6 @@
             android:id="@+id/myListAllLost"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="8dp"
-            android:background="@color/colorLightBlue" />
+            android:layout_marginBottom="8dp" />
     </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

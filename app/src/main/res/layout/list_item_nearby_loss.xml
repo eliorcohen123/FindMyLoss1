@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/relative1"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/black"
+    android:layout_height="175dp"
+    android:background="@drawable/timg"
     android:descendantFocusability="blocksDescendants"
     android:orientation="vertical">
 
@@ -172,7 +172,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="3dp"
                     android:text="Description:"
-                    android:textColor="@color/design_default_color_primary"
+                    android:textColor="@color/colorLightBlue2"
                     android:textSize="17sp" />
 
                 <TextView

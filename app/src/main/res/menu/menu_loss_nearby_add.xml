@@ -4,12 +4,10 @@
 
     <item
         android:id="@+id/options"
-        android:icon="@drawable/ic_dehaze_red_24dp"
+        android:icon="@drawable/ic_dehaze_lightblue_24dp"
         android:title=""
         app:showAsAction="ifRoom">
-
         <menu>
-
             <item
                 android:id="@+id/back_pressed"
                 android:icon="@drawable/ic_arrow_back_red_24dp"
@@ -17,5 +15,4 @@
                 app:showAsAction="ifRoom" />
         </menu>
     </item>
-
 </menu>

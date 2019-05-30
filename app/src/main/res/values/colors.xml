@@ -8,7 +8,7 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorBrown">#FFEA54</color>
     <color name="black">#040406</color>
-    <color name="white">#F5F5F0</color>
+    <color name="white">#FFFFFF</color>
     <color name="red">#610C04</color>
     <color name="lightBrown">#9A7B4F</color>
     <color name="green">#7CFC00</color>
@@ -17,6 +17,7 @@
     <color name="colorLightBlue">#A3CEDC</color>
     <color name="colorBlack">#000000</color>
     <color name="colorTextHint">#51d8c7</color>
+    <color name="gray">#2F4F4F</color>
     <color name="colorOrange">#FF4500</color>
     <color name="colorDarkBrown">#8B4513</color>
     <!-- Screens background color-->
