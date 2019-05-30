@@ -104,6 +104,7 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
         getMyLocation();
         initUI();
         showUI();
+        myRecyclerView();
     }
 
     private void initUI() {
@@ -165,7 +166,9 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
+    }
 
+    private void myRecyclerView() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         ItemDecoration itemDecoration = new ItemDecoration(5);

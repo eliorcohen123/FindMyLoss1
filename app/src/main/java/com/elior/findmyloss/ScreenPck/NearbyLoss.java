@@ -67,6 +67,7 @@ public class NearbyLoss extends AppCompatActivity implements NavigationView.OnNa
 
         initUI();
         showUI();
+        myRecyclerView();
     }
 
     private void initUI() {
@@ -124,7 +125,9 @@ public class NearbyLoss extends AppCompatActivity implements NavigationView.OnNa
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
+    }
 
+    private void myRecyclerView() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         ItemDecoration itemDecoration = new ItemDecoration(5);
