@@ -46,18 +46,18 @@ import java.util.Date;
 public class AddLoss extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private EditText userNameWrite, phoneWrite, placeWrite, descriptionWrite;
-    private Button ChooseButton, UploadButton;
+    private Button chooseButton, uploadButton;
     private Location location;
     private LocationManager locationManager;
     private Criteria criteria;
     private DrawerLayout drawer;
     private CoordinatorLayout coordinatorLayout;
-    private String Storage_Path = "My_Storage";
-    private ImageView SelectImage;
+    private String storage_Path = "My_Storage";
+    private ImageView selectImage;
     private Uri FilePathUri;
     private StorageReference storageReference;
     private DatabaseReference databaseReference;
-    private int Image_Request_Code = 7;
+    private int image_Request_Code = 7;
     private ProgressDialog progressDialog;
     private Toolbar toolbar;
     private NavigationView navigationView;
@@ -80,9 +80,9 @@ public class AddLoss extends AppCompatActivity implements NavigationView.OnNavig
         phoneWrite = findViewById(R.id.phoneWrite);
         placeWrite = findViewById(R.id.placeWrite);
         descriptionWrite = findViewById(R.id.descriptionWrite);
-        ChooseButton = findViewById(R.id.ButtonChooseImage);
-        UploadButton = findViewById(R.id.ButtonUploadImage);
-        SelectImage = findViewById(R.id.imageSelect);
+        chooseButton = findViewById(R.id.ButtonChooseImage);
+        uploadButton = findViewById(R.id.ButtonUploadImage);
+        selectImage = findViewById(R.id.imageSelect);
         coordinatorLayout = findViewById(R.id.myContent);
     }
 
@@ -112,17 +112,17 @@ public class AddLoss extends AppCompatActivity implements NavigationView.OnNavig
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
         progressDialog = new ProgressDialog(AddLoss.this);
-        ChooseButton.setOnClickListener(new View.OnClickListener() {
+        chooseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Please Select Image"), Image_Request_Code);
+                startActivityForResult(Intent.createChooser(intent, "Please Select Image"), image_Request_Code);
             }
         });
 
-        UploadButton.setOnClickListener(new View.OnClickListener() {
+        uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 uploadImageFileToFirebaseStorage();
@@ -133,12 +133,12 @@ public class AddLoss extends AppCompatActivity implements NavigationView.OnNavig
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == Image_Request_Code && resultCode == RESULT_OK && data != null && data.getData() != null) {
+        if (requestCode == image_Request_Code && resultCode == RESULT_OK && data != null && data.getData() != null) {
             FilePathUri = data.getData();
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), FilePathUri);
-                SelectImage.setImageBitmap(bitmap);
-                ChooseButton.setText("Image Selected");
+                selectImage.setImageBitmap(bitmap);
+                chooseButton.setText("Image Selected");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -158,7 +158,7 @@ public class AddLoss extends AppCompatActivity implements NavigationView.OnNavig
                 progressDialog.setTitle("Data is Uploading...");
                 progressDialog.show();
             }
-            final StorageReference storageReference2nd = storageReference.child(Storage_Path + System.currentTimeMillis() + "." + getFileExtension(FilePathUri));
+            final StorageReference storageReference2nd = storageReference.child(storage_Path + System.currentTimeMillis() + "." + getFileExtension(FilePathUri));
             storageReference2nd.putFile(FilePathUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
