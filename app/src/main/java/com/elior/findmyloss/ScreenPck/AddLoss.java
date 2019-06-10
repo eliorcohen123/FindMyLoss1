@@ -125,7 +125,7 @@ public class AddLoss extends AppCompatActivity implements NavigationView.OnNavig
         UploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UploadImageFileToFirebaseStorage();
+                uploadImageFileToFirebaseStorage();
             }
         });
     }
@@ -145,20 +145,20 @@ public class AddLoss extends AppCompatActivity implements NavigationView.OnNavig
         }
     }
 
-    public String GetFileExtension(Uri uri) {
+    public String getFileExtension(Uri uri) {
         ContentResolver contentResolver = getContentResolver();
         MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
     }
 
-    public void UploadImageFileToFirebaseStorage() {
+    public void uploadImageFileToFirebaseStorage() {
         if (FilePathUri != null) {
             if (!TextUtils.isEmpty(userNameWrite.getText()) && !TextUtils.isEmpty(phoneWrite.getText())
                     && !TextUtils.isEmpty(placeWrite.getText()) && !TextUtils.isEmpty(descriptionWrite.getText())) {  // If the text are not empty the movie will not be approved
                 progressDialog.setTitle("Data is Uploading...");
                 progressDialog.show();
             }
-            final StorageReference storageReference2nd = storageReference.child(Storage_Path + System.currentTimeMillis() + "." + GetFileExtension(FilePathUri));
+            final StorageReference storageReference2nd = storageReference.child(Storage_Path + System.currentTimeMillis() + "." + getFileExtension(FilePathUri));
             storageReference2nd.putFile(FilePathUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
