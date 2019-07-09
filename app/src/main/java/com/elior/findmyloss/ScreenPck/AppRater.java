@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 class AppRater {
 
-    private final static String APP_TITLE = "Find My Loss";// App Name
+    private final static String APP_TITLE = "Find My LossModel";// App Name
     private final static String APP_PNAME = "com.elior.findmyloss";// Package Name
 
     private final static int MILLISECONDS_UNTIL_PROMPT = 1;//Min number of milliSeconds

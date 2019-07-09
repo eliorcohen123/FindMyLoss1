@@ -29,7 +29,7 @@ import android.support.v4.app.ActivityCompat;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.elior.findmyloss.OthersPck.Loss;
+import com.elior.findmyloss.OthersPck.LossModel;
 import com.elior.findmyloss.R;
 
 public class AdapterAllLoss extends RecyclerView.Adapter<AdapterAllLoss.ViewHolder> implements Filterable {
@@ -66,13 +66,13 @@ public class AdapterAllLoss extends RecyclerView.Adapter<AdapterAllLoss.ViewHold
         private final MenuItem.OnMenuItemClickListener onChange = new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                Loss loss = lossList.get(getAdapterPosition());
+                LossModel lossModel = lossList.get(getAdapterPosition());
                 if (item.getItemId() == 1) {
-                    String name = loss.getmName();
-                    String phone = loss.getmPhone();
-                    String place = loss.getmPlace();
-                    String description = loss.getmDescription();
-                    String date = loss.getmDate();
+                    String name = lossModel.getmName();
+                    String phone = lossModel.getmPhone();
+                    String place = lossModel.getmPlace();
+                    String description = lossModel.getmDescription();
+                    String date = lossModel.getmDate();
                     Intent sendIntent = new Intent();
                     sendIntent.setAction(Intent.ACTION_SEND);
                     sendIntent.putExtra(Intent.EXTRA_TEXT, "Name: " + name + "\nPhone: " + phone + "\nPlace: " + place +
@@ -80,17 +80,17 @@ public class AdapterAllLoss extends RecyclerView.Adapter<AdapterAllLoss.ViewHold
                     sendIntent.setType("text/plain");
                     mInflater.getContext().startActivity(sendIntent);
                 } else if (item.getItemId() == 2) {
-                    String name = loss.getmName();
-                    String phone = loss.getmPhone();
-                    String place = loss.getmPlace();
-                    String description = loss.getmDescription();
-                    String date = loss.getmDate();
+                    String name = lossModel.getmName();
+                    String phone = lossModel.getmPhone();
+                    String place = lossModel.getmPlace();
+                    String description = lossModel.getmDescription();
+                    String date = lossModel.getmDate();
                     Intent i = new Intent(Intent.ACTION_SEND);
                     i.setType("message/rfc822");
                     i.putExtra(Intent.EXTRA_EMAIL, new String[]{"reportlost1@gmail.com"});
                     i.putExtra(Intent.EXTRA_SUBJECT, "Reporting Lost");
                     i.putExtra(Intent.EXTRA_TEXT, "Name: " + name + "\nPhone: " + phone + "\nPlace: " + place +
-                            "\nDescription: " + description + "\nDate: " + date + "\n\nThe above loss was found.");
+                            "\nDescription: " + description + "\nDate: " + date + "\n\nThe above lossModel was found.");
                     try {
                         mInflater.getContext().startActivity(Intent.createChooser(i, "Send mail..."));
                     } catch (android.content.ActivityNotFoundException ex) {
@@ -103,14 +103,14 @@ public class AdapterAllLoss extends RecyclerView.Adapter<AdapterAllLoss.ViewHold
     }
 
     private Context context;
-    private List<Loss> lossList;
-    private List<Loss> lossListFiltered;
+    private List<LossModel> lossList;
+    private List<LossModel> lossListFiltered;
     private Location location;
     private LocationManager locationManager;
     private Criteria criteria;
     private final LayoutInflater mInflater;
 
-    public AdapterAllLoss(Context context, List<Loss> lossList) {
+    public AdapterAllLoss(Context context, List<LossModel> lossList) {
         this.lossList = lossList;
         this.context = context;
         this.lossListFiltered = lossList;
@@ -125,11 +125,11 @@ public class AdapterAllLoss extends RecyclerView.Adapter<AdapterAllLoss.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        Loss loss = lossListFiltered.get(position);
+        LossModel lossModel = lossListFiltered.get(position);
 
-        holder.name.setText(loss.getmName());
-        holder.phone.setText(loss.getmPhone());
-        holder.place.setText(loss.getmPlace());
+        holder.name.setText(lossModel.getmName());
+        holder.phone.setText(lossModel.getmPhone());
+        holder.place.setText(lossModel.getmPlace());
 
         locationManager = (LocationManager) mInflater.getContext().getSystemService(Context.LOCATION_SERVICE);
         criteria = new Criteria();
@@ -148,8 +148,8 @@ public class AdapterAllLoss extends RecyclerView.Adapter<AdapterAllLoss.ViewHold
             if (location != null) {
                 double distanceMe;
                 Location locationA = new Location("Point A");
-                locationA.setLatitude(loss.getmLat());
-                locationA.setLongitude(loss.getmLng());
+                locationA.setLatitude(lossModel.getmLat());
+                locationA.setLongitude(lossModel.getmLng());
                 Location locationB = new Location("Point B");
                 locationB.setLatitude(location.getLatitude());
                 locationB.setLongitude(location.getLongitude());
@@ -169,7 +169,7 @@ public class AdapterAllLoss extends RecyclerView.Adapter<AdapterAllLoss.ViewHold
             }
         }
 
-        holder.description.setText(loss.getmDescription());
+        holder.description.setText(lossModel.getmDescription());
 
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -185,7 +185,7 @@ public class AdapterAllLoss extends RecyclerView.Adapter<AdapterAllLoss.ViewHold
             }
         });
 
-        Glide.with(mInflater.getContext()).load(loss.getmImage()).into(holder.imageView);
+        Glide.with(mInflater.getContext()).load(lossModel.getmImage()).into(holder.imageView);
     }
 
     @Override
@@ -202,8 +202,8 @@ public class AdapterAllLoss extends RecyclerView.Adapter<AdapterAllLoss.ViewHold
                 if (charString.isEmpty()) {
                     lossListFiltered = lossList;
                 } else {
-                    List<Loss> filteredList = new ArrayList<>();
-                    for (Loss row : lossList) {
+                    List<LossModel> filteredList = new ArrayList<>();
+                    for (LossModel row : lossList) {
 
                         // name match condition. this might differ depending on your requirement
                         // here we are looking for name or phone number match
@@ -220,7 +220,7 @@ public class AdapterAllLoss extends RecyclerView.Adapter<AdapterAllLoss.ViewHold
 
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                lossListFiltered = (ArrayList<Loss>) filterResults.values;
+                lossListFiltered = (ArrayList<LossModel>) filterResults.values;
                 notifyDataSetChanged();
             }
         };

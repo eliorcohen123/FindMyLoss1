@@ -21,7 +21,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.elior.findmyloss.AdapterPck.AdapterNearbyLoss;
 import com.elior.findmyloss.OthersPck.ItemDecoration;
-import com.elior.findmyloss.OthersPck.Loss;
+import com.elior.findmyloss.OthersPck.LossModel;
 import com.elior.findmyloss.R;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -46,7 +46,7 @@ import android.widget.Toast;
 
 public class NearbyLoss extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private List<Loss> arrayListMyNearLoss;
+    private List<LossModel> arrayListMyNearLoss;
     private Location location;
     private LocationManager locationManager;
     private Criteria criteria;
@@ -173,8 +173,8 @@ public class NearbyLoss extends AppCompatActivity implements NavigationView.OnNa
                                 locationB.setLongitude(location.getLongitude());
                                 distanceMe = locationA.distanceTo(locationB);  // in km
                                 if (distanceMe < myRadius) {
-                                    Loss loss = postSnapshot.getValue(Loss.class);
-                                    arrayListMyNearLoss.add(loss);
+                                    LossModel lossModel = postSnapshot.getValue(LossModel.class);
+                                    arrayListMyNearLoss.add(lossModel);
                                 }
                             }
                         }

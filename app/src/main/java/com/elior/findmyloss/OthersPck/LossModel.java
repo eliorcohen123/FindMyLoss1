@@ -1,6 +1,6 @@
 package com.elior.findmyloss.OthersPck;
 
-public class Loss {
+public class LossModel {
 
     private String mName;
     private String mPhone;
@@ -11,11 +11,11 @@ public class Loss {
     private String mDescription;
     private String mImage;
 
-    public Loss() {
+    public LossModel() {
 
     }
 
-    public Loss(String mName, String mPhone, String mPlace, String mDate, double mLat, double mLng, String mDescription, String mImage) {
+    public LossModel(String mName, String mPhone, String mPlace, String mDate, double mLat, double mLng, String mDescription, String mImage) {
         this.mName = mName;
         this.mPhone = mPhone;
         this.mPlace = mPlace;

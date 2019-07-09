@@ -31,7 +31,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.elior.findmyloss.OthersPck.Loss;
+import com.elior.findmyloss.OthersPck.LossModel;
 import com.elior.findmyloss.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
@@ -194,9 +194,9 @@ public class AddLoss extends AppCompatActivity implements NavigationView.OnNavig
                                         progressDialog.dismiss();
                                         Toast.makeText(AddLoss.this, "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
                                         @SuppressWarnings("VisibleForTests")
-                                        Loss loss = new Loss(name, phone, place, date1, lat, lng, description, uri.toString());
+                                        LossModel lossModel = new LossModel(name, phone, place, date1, lat, lng, description, uri.toString());
                                         String imageUploadId = databaseReference.push().getKey();
-                                        databaseReference.child(imageUploadId).setValue(loss);
+                                        databaseReference.child(imageUploadId).setValue(lossModel);
                                         Snackbar.make(coordinatorLayout, R.string.item_removed_message, Snackbar.LENGTH_LONG)
                                                 .setAction(R.string.undo, new View.OnClickListener() {
                                                     @Override

@@ -31,7 +31,7 @@ import android.view.View;
 
 import com.elior.findmyloss.AdapterPck.AdapterAllLoss;
 import com.elior.findmyloss.OthersPck.ItemDecoration;
-import com.elior.findmyloss.OthersPck.Loss;
+import com.elior.findmyloss.OthersPck.LossModel;
 import com.elior.findmyloss.R;
 import com.google.android.gms.common.api.GoogleApiClient;
 
@@ -73,7 +73,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class AllLoss extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
-    private List<Loss> arrayListAllLoss;
+    private List<LossModel> arrayListAllLoss;
     private DrawerLayout drawer;
     private static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     private static final int MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION = 33;
@@ -186,8 +186,8 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
                 try {
                     arrayListAllLoss.clear();
                     for (com.google.firebase.database.DataSnapshot postSnapshot : snapshot.getChildren()) {
-                        Loss loss = postSnapshot.getValue(Loss.class);
-                        arrayListAllLoss.add(loss);
+                        LossModel lossModel = postSnapshot.getValue(LossModel.class);
+                        arrayListAllLoss.add(lossModel);
                     }
                     adapter = new AdapterAllLoss(AllLoss.this, arrayListAllLoss);
                     recyclerView.setAdapter(adapter);
