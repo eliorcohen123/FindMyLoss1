@@ -6,16 +6,16 @@ public class LossModel {
     private String mPhone;
     private String mPlace;
     private String mDate;
-    private double mLat;
-    private double mLng;
     private String mDescription;
     private String mImage;
+    private double mLat;
+    private double mLng;
 
     public LossModel() {
 
     }
 
-    public LossModel(String mName, String mPhone, String mPlace, String mDate, double mLat, double mLng, String mDescription, String mImage) {
+    public LossModel(String mName, String mPhone, String mPlace, String mDate, String mDescription, String mImage, double mLat, double mLng) {
         this.mName = mName;
         this.mPhone = mPhone;
         this.mPlace = mPlace;

@@ -184,17 +184,17 @@ public class AddLoss extends AppCompatActivity implements NavigationView.OnNavig
                                             && !TextUtils.isEmpty(placeWrite.getText()) && !TextUtils.isEmpty(descriptionWrite.getText())) {  // If the text are not empty the movie will not be approved
                                         Date date = new Date();
                                         String date1 = date.toString().trim();
-                                        double lat = location.getLatitude();
-                                        double lng = location.getLongitude();
                                         String name = userNameWrite.getText().toString().trim();
                                         String phone = phoneWrite.getText().toString().trim();
                                         String place = placeWrite.getText().toString().trim();
                                         String description = descriptionWrite.getText().toString().trim();
+                                        double lat = location.getLatitude();
+                                        double lng = location.getLongitude();
 
                                         progressDialog.dismiss();
                                         Toast.makeText(AddLoss.this, "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
                                         @SuppressWarnings("VisibleForTests")
-                                        LossModel lossModel = new LossModel(name, phone, place, date1, lat, lng, description, uri.toString());
+                                        LossModel lossModel = new LossModel(name, phone, place, date1, description, uri.toString(), lat, lng);
                                         String imageUploadId = databaseReference.push().getKey();
                                         databaseReference.child(imageUploadId).setValue(lossModel);
                                         Snackbar.make(coordinatorLayout, R.string.item_removed_message, Snackbar.LENGTH_LONG)
