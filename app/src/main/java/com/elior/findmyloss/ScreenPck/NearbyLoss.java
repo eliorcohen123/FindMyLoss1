@@ -59,6 +59,7 @@ public class NearbyLoss extends AppCompatActivity implements NavigationView.OnNa
     private DatabaseReference databaseReference;
     private Toolbar toolbar;
     private NavigationView navigationView;
+    private ItemDecoration itemDecoration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +77,8 @@ public class NearbyLoss extends AppCompatActivity implements NavigationView.OnNa
         navigationView = findViewById(R.id.nav_view);
         swipeRefreshLayout = findViewById(R.id.swipe_containerFrag);
         recyclerView = findViewById(R.id.myListNearbyLoss);
+
+        arrayListMyNearLoss = new ArrayList<>();
     }
 
     private void showUI() {
@@ -130,14 +133,13 @@ public class NearbyLoss extends AppCompatActivity implements NavigationView.OnNa
     private void myRecyclerView() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        ItemDecoration itemDecoration = new ItemDecoration(5);
+        itemDecoration = new ItemDecoration(5);
         recyclerView.addItemDecoration(itemDecoration);
-
-        arrayListMyNearLoss = new ArrayList<>();
 
         progressDialog = new ProgressDialog(NearbyLoss.this);
         progressDialog.setMessage(getString(R.string.loading_data));
         progressDialog.show();
+
         databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference.addValueEventListener(new com.google.firebase.database.ValueEventListener() {
             @Override

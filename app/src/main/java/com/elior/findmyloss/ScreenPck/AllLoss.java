@@ -95,6 +95,7 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
     private DatabaseReference databaseReference;
     private Toolbar toolbar;
     private NavigationView navigationView;
+    private ItemDecoration itemDecoration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,6 +116,8 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
         swipeRefreshLayout = findViewById(R.id.swipe_containerFrag);
 
         recyclerView = findViewById(R.id.myListAllLost);
+
+        arrayListAllLoss = new ArrayList<>();
 
         AppRater.app_launched(this);
     }
@@ -171,10 +174,8 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
     private void myRecyclerView() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        ItemDecoration itemDecoration = new ItemDecoration(5);
+        itemDecoration = new ItemDecoration(5);
         recyclerView.addItemDecoration(itemDecoration);
-
-        arrayListAllLoss = new ArrayList<>();
 
         progressDialog = new ProgressDialog(AllLoss.this);
         progressDialog.setMessage(getString(R.string.loading_data));
