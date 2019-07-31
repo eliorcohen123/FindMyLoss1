@@ -50,6 +50,7 @@ public class AddLoss extends AppCompatActivity implements NavigationView.OnNavig
     private Location location;
     private LocationManager locationManager;
     private Criteria criteria;
+    private String provider;
     private DrawerLayout drawer;
     private CoordinatorLayout coordinatorLayout;
     private String storage_Path = "My_Storage";
@@ -68,6 +69,7 @@ public class AddLoss extends AppCompatActivity implements NavigationView.OnNavig
         setContentView(R.layout.add_loss);
 
         initUI();
+        initLocation();
         showUI();
     }
 
@@ -85,6 +87,13 @@ public class AddLoss extends AppCompatActivity implements NavigationView.OnNavig
         selectImage = findViewById(R.id.imageSelect);
         coordinatorLayout = findViewById(R.id.myContent);
     }
+
+    private void initLocation() {
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        criteria = new Criteria();
+        provider = locationManager.getBestProvider(criteria, true);
+    }
+
 
     private void showUI() {
         setSupportActionBar(toolbar);
@@ -165,9 +174,6 @@ public class AddLoss extends AppCompatActivity implements NavigationView.OnNavig
                     storageReference2nd.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
-                            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                            criteria = new Criteria();
-                            String provider = locationManager.getBestProvider(criteria, true);
                             if (ActivityCompat.checkSelfPermission(AddLoss.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                                 ActivityCompat.checkSelfPermission(AddLoss.this, Manifest.permission.ACCESS_COARSE_LOCATION);
                             }// TODO: Consider calling

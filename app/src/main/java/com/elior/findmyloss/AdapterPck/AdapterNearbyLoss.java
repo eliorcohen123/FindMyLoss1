@@ -49,7 +49,7 @@ public class AdapterNearbyLoss extends RecyclerView.Adapter<AdapterNearbyLoss.Vi
             description = itemView.findViewById(R.id.description1);
             imageView = itemView.findViewById(R.id.image1);
             relativeLayout = itemView.findViewById(R.id.relative1);
-            
+
             itemView.setOnCreateContextMenuListener(this);
         }
 
@@ -108,6 +108,7 @@ public class AdapterNearbyLoss extends RecyclerView.Adapter<AdapterNearbyLoss.Vi
     private Location location;
     private LocationManager locationManager;
     private Criteria criteria;
+    private String provider;
     private final LayoutInflater mInflater;
 
     public AdapterNearbyLoss(Context context, List<LossModel> lossList) {
@@ -133,7 +134,7 @@ public class AdapterNearbyLoss extends RecyclerView.Adapter<AdapterNearbyLoss.Vi
 
         locationManager = (LocationManager) mInflater.getContext().getSystemService(Context.LOCATION_SERVICE);
         criteria = new Criteria();
-        String provider = locationManager.getBestProvider(criteria, true);
+        provider = locationManager.getBestProvider(criteria, true);
         if (ActivityCompat.checkSelfPermission(mInflater.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.checkSelfPermission(mInflater.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION);
         }// TODO: Consider calling

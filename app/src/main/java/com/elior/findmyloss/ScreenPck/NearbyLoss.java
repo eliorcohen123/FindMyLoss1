@@ -50,6 +50,7 @@ public class NearbyLoss extends AppCompatActivity implements NavigationView.OnNa
     private Location location;
     private LocationManager locationManager;
     private Criteria criteria;
+    private String provider;
     private RecyclerView recyclerView;
     private AdapterNearbyLoss adapter;
     private android.support.v7.widget.SearchView searchView;
@@ -67,6 +68,7 @@ public class NearbyLoss extends AppCompatActivity implements NavigationView.OnNa
         setContentView(R.layout.activity_nearby_loss);
 
         initUI();
+        initLocation();
         showUI();
         myRecyclerView();
     }
@@ -79,6 +81,12 @@ public class NearbyLoss extends AppCompatActivity implements NavigationView.OnNa
         recyclerView = findViewById(R.id.myListNearbyLoss);
 
         arrayListMyNearLoss = new ArrayList<>();
+    }
+
+    private void initLocation() {
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        criteria = new Criteria();
+        provider = locationManager.getBestProvider(criteria, true);
     }
 
     private void showUI() {
@@ -151,9 +159,6 @@ public class NearbyLoss extends AppCompatActivity implements NavigationView.OnNa
                     for (com.google.firebase.database.DataSnapshot postSnapshot : snapshot.getChildren()) {
                         Double lat1 = (Double) postSnapshot.child("mLat").getValue();
                         Double lng1 = (Double) postSnapshot.child("mLng").getValue();
-                        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                        criteria = new Criteria();
-                        String provider = locationManager.getBestProvider(criteria, true);
                         if (ActivityCompat.checkSelfPermission(NearbyLoss.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                             ActivityCompat.checkSelfPermission(NearbyLoss.this, Manifest.permission.ACCESS_COARSE_LOCATION);
                         }// TODO: Consider calling

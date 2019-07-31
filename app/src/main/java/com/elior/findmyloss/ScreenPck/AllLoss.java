@@ -87,6 +87,7 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
     private Location location;
     private LocationManager locationManager;
     private Criteria criteria;
+    private String provider;
     private RecyclerView recyclerView;
     private AdapterAllLoss adapter;
     private android.support.v7.widget.SearchView searchView;
@@ -104,6 +105,7 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
 
         getMyLocation();
         initUI();
+        initLocation();
         showUI();
         myRecyclerView();
     }
@@ -120,6 +122,12 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
         arrayListAllLoss = new ArrayList<>();
 
         AppRater.app_launched(this);
+    }
+
+    private void initLocation() {
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        criteria = new Criteria();
+        provider = locationManager.getBestProvider(criteria, true);
     }
 
     private void showUI() {
@@ -350,9 +358,6 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         if (id == R.id.add_loss) {
-            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-            criteria = new Criteria();
-            String provider = locationManager.getBestProvider(criteria, true);
             if (ActivityCompat.checkSelfPermission(AllLoss.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.checkSelfPermission(AllLoss.this, Manifest.permission.ACCESS_COARSE_LOCATION);
             }// TODO: Consider calling
@@ -372,9 +377,6 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
                 }
             }
         } else if (id == R.id.nearby_loss) {
-            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-            criteria = new Criteria();
-            String provider = locationManager.getBestProvider(criteria, true);
             if (ActivityCompat.checkSelfPermission(AllLoss.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.checkSelfPermission(AllLoss.this, Manifest.permission.ACCESS_COARSE_LOCATION);
             }// TODO: Consider calling
