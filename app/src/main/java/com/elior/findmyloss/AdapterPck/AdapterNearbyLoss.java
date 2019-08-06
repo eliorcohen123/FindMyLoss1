@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
@@ -184,6 +185,8 @@ public class AdapterNearbyLoss extends RecyclerView.Adapter<AdapterNearbyLoss.Vi
         });
 
         Glide.with(mInflater.getContext()).load(lossModel.getmImage()).into(holder.imageView);
+
+        setFadeAnimation(holder.itemView);
     }
 
     @Override
@@ -222,6 +225,12 @@ public class AdapterNearbyLoss extends RecyclerView.Adapter<AdapterNearbyLoss.Vi
                 notifyDataSetChanged();
             }
         };
+    }
+
+    private void setFadeAnimation(View view) {
+        AlphaAnimation anim = new AlphaAnimation(0.0f, 1.0f);
+        anim.setDuration(1500);
+        view.startAnimation(anim);
     }
 
 }
