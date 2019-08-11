@@ -43,7 +43,7 @@ import com.google.firebase.storage.UploadTask;
 import java.io.IOException;
 import java.util.Date;
 
-public class AddLoss extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class AddLoss extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     private EditText userNameWrite, phoneWrite, placeWrite, descriptionWrite;
     private Button chooseButton, uploadButton;
@@ -69,6 +69,7 @@ public class AddLoss extends AppCompatActivity implements NavigationView.OnNavig
         setContentView(R.layout.add_loss);
 
         initUI();
+        initListeners();
         initLocation();
         showUI();
     }
@@ -82,10 +83,15 @@ public class AddLoss extends AppCompatActivity implements NavigationView.OnNavig
         phoneWrite = findViewById(R.id.phoneWrite);
         placeWrite = findViewById(R.id.placeWrite);
         descriptionWrite = findViewById(R.id.descriptionWrite);
-        chooseButton = findViewById(R.id.ButtonChooseImage);
-        uploadButton = findViewById(R.id.ButtonUploadImage);
+        chooseButton = findViewById(R.id.buttonChooseImage);
+        uploadButton = findViewById(R.id.buttonUploadImage);
         selectImage = findViewById(R.id.imageSelect);
         coordinatorLayout = findViewById(R.id.myContent);
+    }
+
+    private void initListeners() {
+        chooseButton.setOnClickListener(this);
+        chooseButton.setOnClickListener(this);
     }
 
     private void initLocation() {
@@ -93,7 +99,6 @@ public class AddLoss extends AppCompatActivity implements NavigationView.OnNavig
         criteria = new Criteria();
         provider = locationManager.getBestProvider(criteria, true);
     }
-
 
     private void showUI() {
         setSupportActionBar(toolbar);
@@ -120,23 +125,7 @@ public class AddLoss extends AppCompatActivity implements NavigationView.OnNavig
         storageReference = FirebaseStorage.getInstance().getReference();
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        progressDialog = new ProgressDialog(AddLoss.this);
-        chooseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Please Select Image"), image_Request_Code);
-            }
-        });
-
-        uploadButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                uploadImageFileToFirebaseStorage();
-            }
-        });
+        progressDialog = new ProgressDialog(this);
     }
 
     @Override
@@ -237,6 +226,20 @@ public class AddLoss extends AppCompatActivity implements NavigationView.OnNavig
             });
         } else {
             Toast.makeText(AddLoss.this, "Please Select Image", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.buttonChooseImage:
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Please Select Image"), image_Request_Code);
+                break;
+            case R.id.buttonUploadImage:
+                uploadImageFileToFirebaseStorage();
         }
     }
 

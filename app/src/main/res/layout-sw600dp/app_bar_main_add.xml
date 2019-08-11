@@ -111,7 +111,7 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/ButtonChooseImage"
+                android:id="@+id/buttonChooseImage"
                 android:layout_width="125dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
@@ -121,7 +121,7 @@
                 android:textColor="@color/white" />
 
             <Button
-                android:id="@+id/ButtonUploadImage"
+                android:id="@+id/buttonUploadImage"
                 android:layout_width="125dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
