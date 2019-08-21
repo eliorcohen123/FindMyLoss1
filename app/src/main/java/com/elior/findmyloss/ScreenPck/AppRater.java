@@ -46,7 +46,7 @@ class AppRater {
             }
         }
 
-        editor.commit();
+        editor.apply();
     }
 
     private static void showRateDialog(final Context mContext, final SharedPreferences.Editor editor) {
