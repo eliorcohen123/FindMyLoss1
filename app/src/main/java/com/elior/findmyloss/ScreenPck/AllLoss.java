@@ -110,6 +110,34 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
         myRecyclerView();
     }
 
+    // onStart
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (!checkPermissions()) {
+            Log.i(TAG, "Inside onStart function; requesting permission when permission is not available");
+            requestPermissions();
+        } else {
+            Log.i(TAG, "Inside onStart function; getting location when permission is already available");
+            getLastLocation();
+        }
+    }
+
+    // onResume
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startLocationUpdates();
+    }
+
+    // onPause
+    @Override
+    protected void onPause() {
+        super.onPause();
+        startLocationUpdates();
+//        stopLocationUpdates();
+    }
+
     private void initUI() {
         toolbar = findViewById(R.id.toolbar);
         drawer = findViewById(R.id.drawer_layout);
@@ -615,34 +643,6 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
                         }
                     }
                 });
-    }
-
-    // onStart
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (!checkPermissions()) {
-            Log.i(TAG, "Inside onStart function; requesting permission when permission is not available");
-            requestPermissions();
-        } else {
-            Log.i(TAG, "Inside onStart function; getting location when permission is already available");
-            getLastLocation();
-        }
-    }
-
-    // onResume
-    @Override
-    protected void onResume() {
-        super.onResume();
-        startLocationUpdates();
-    }
-
-    // onPause
-    @Override
-    protected void onPause() {
-        super.onPause();
-        startLocationUpdates();
-//        stopLocationUpdates();
     }
 
 }
