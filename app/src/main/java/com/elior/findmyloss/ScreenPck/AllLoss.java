@@ -216,6 +216,7 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
         progressDialog = new ProgressDialog(AllLoss.this);
         progressDialog.setMessage(getString(R.string.loading_data));
         progressDialog.show();
+
         databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference.addValueEventListener(new com.google.firebase.database.ValueEventListener() {
             @Override
