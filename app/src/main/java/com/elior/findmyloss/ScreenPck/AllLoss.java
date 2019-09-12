@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.location.Criteria;
 import android.location.Location;
@@ -70,6 +71,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import guy4444.smartrate.SmartRate;
+
 public class AllLoss extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
@@ -105,6 +108,7 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
 
         getMyLocation();
         initUI();
+        initAppRater();
         initLocation();
         showUI();
         myRecyclerView();
@@ -148,8 +152,24 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
         recyclerView = findViewById(R.id.myListAllLost);
 
         arrayListAllLoss = new ArrayList<>();
+    }
 
-        AppRater.app_launched(this);
+    private void initAppRater() {
+        SmartRate.Rate(AllLoss.this
+                , "Rate Us"
+                , "Tell others what you think about this app"
+                , "Continue"
+                , "Please take a moment and rate us on Google Play"
+                , "click here"
+                , "Ask me later"
+                , "Never ask again"
+                , "Cancel"
+                , "Thanks for the feedback"
+                , Color.parseColor("#2196F3")
+                , 5
+                , 1
+                , 1
+        );
     }
 
     private void initLocation() {
