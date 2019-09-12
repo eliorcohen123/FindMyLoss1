@@ -103,14 +103,11 @@ public class AddLoss extends AppCompatActivity implements NavigationView.OnNavig
     private void showUI() {
         setSupportActionBar(toolbar);
 
-        findViewById(R.id.myButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (drawer.isDrawerOpen(GravityCompat.END)) {
-                    drawer.closeDrawer(GravityCompat.END);
-                } else
-                    drawer.openDrawer(GravityCompat.END);
-            }
+        findViewById(R.id.myButton).setOnClickListener(v -> {
+            if (drawer.isDrawerOpen(GravityCompat.END)) {
+                drawer.closeDrawer(GravityCompat.END);
+            } else
+                drawer.openDrawer(GravityCompat.END);
         });
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -157,73 +154,62 @@ public class AddLoss extends AppCompatActivity implements NavigationView.OnNavig
                 progressDialog.show();
             }
             final StorageReference storageReference2nd = storageReference.child(storage_Path + System.currentTimeMillis() + "." + getFileExtension(FilePathUri));
-            storageReference2nd.putFile(FilePathUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    storageReference2nd.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                            if (ActivityCompat.checkSelfPermission(AddLoss.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                                ActivityCompat.checkSelfPermission(AddLoss.this, Manifest.permission.ACCESS_COARSE_LOCATION);
-                            }// TODO: Consider calling
+            storageReference2nd.putFile(FilePathUri).addOnSuccessListener(taskSnapshot -> storageReference2nd.getDownloadUrl().addOnSuccessListener(uri -> {
+                if (ActivityCompat.checkSelfPermission(AddLoss.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.checkSelfPermission(AddLoss.this, Manifest.permission.ACCESS_COARSE_LOCATION);
+                }// TODO: Consider calling
 //    ActivityCompat#requestPermissions
 // here to request the missing permissions, and then overriding
 //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
 //                                          int[] grantResults)
 // to handle the case where the user grants the permission. See the documentation
 // for ActivityCompat#requestPermissions for more details.
-                            if (provider != null) {
-                                location = locationManager.getLastKnownLocation(provider);
-                                if (location != null) {
-                                    if (!TextUtils.isEmpty(userNameWrite.getText()) && !TextUtils.isEmpty(phoneWrite.getText())
-                                            && !TextUtils.isEmpty(placeWrite.getText()) && !TextUtils.isEmpty(descriptionWrite.getText())) {  // If the text are not empty the movie will not be approved
-                                        Date date = new Date();
-                                        String date1 = date.toString().trim();
-                                        String name = userNameWrite.getText().toString().trim();
-                                        String phone = phoneWrite.getText().toString().trim();
-                                        String place = placeWrite.getText().toString().trim();
-                                        String description = descriptionWrite.getText().toString().trim();
-                                        double lat = location.getLatitude();
-                                        double lng = location.getLongitude();
+                if (provider != null) {
+                    location = locationManager.getLastKnownLocation(provider);
+                    if (location != null) {
+                        if (!TextUtils.isEmpty(userNameWrite.getText()) && !TextUtils.isEmpty(phoneWrite.getText())
+                                && !TextUtils.isEmpty(placeWrite.getText()) && !TextUtils.isEmpty(descriptionWrite.getText())) {  // If the text are not empty the movie will not be approved
+                            Date date = new Date();
+                            String date1 = date.toString().trim();
+                            String name = userNameWrite.getText().toString().trim();
+                            String phone = phoneWrite.getText().toString().trim();
+                            String place = placeWrite.getText().toString().trim();
+                            String description = descriptionWrite.getText().toString().trim();
+                            double lat = location.getLatitude();
+                            double lng = location.getLongitude();
 
-                                        progressDialog.dismiss();
-                                        Toast.makeText(AddLoss.this, "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
-                                        @SuppressWarnings("VisibleForTests")
-                                        LossModel lossModel = new LossModel(name, phone, place, date1, description, uri.toString(), lat, lng);
-                                        String imageUploadId = databaseReference.push().getKey();
-                                        databaseReference.child(imageUploadId).setValue(lossModel);
-                                        Snackbar.make(coordinatorLayout, R.string.item_removed_message, Snackbar.LENGTH_LONG)
-                                                .setAction(R.string.undo, new View.OnClickListener() {
-                                                    @Override
-                                                    public void onClick(View v) {
-                                                        // Respond to the click, such as by undoing the modification that caused
-                                                        // this message to be displayed
-                                                    }
-                                                })
-                                                .show();
-                                    }
-                                }
-                            }
-
-                            if (TextUtils.isEmpty(userNameWrite.getText())) {  // If the text are empty the movie will not be approved
-                                userNameWrite.setError("Name is required!");  // Print text of error if the text are empty
-                            }
-
-                            if (TextUtils.isEmpty(phoneWrite.getText())) {  // If the text are empty the movie will not be approved
-                                phoneWrite.setError("Phone is required!");  // Print text of error if the text are empty
-                            }
-
-                            if (TextUtils.isEmpty(placeWrite.getText())) {  // If the text are empty the movie will not be approved
-                                placeWrite.setError("Place is required!");  // Print text of error if the text are empty
-                            }
-
-                            if (TextUtils.isEmpty(descriptionWrite.getText())) {  // If the text are empty the movie will not be approved
-                                descriptionWrite.setError("Description is required!");  // Print text of error if the text are empty
-                            }
+                            progressDialog.dismiss();
+                            Toast.makeText(AddLoss.this, "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
+                            @SuppressWarnings("VisibleForTests")
+                            LossModel lossModel = new LossModel(name, phone, place, date1, description, uri.toString(), lat, lng);
+                            String imageUploadId = databaseReference.push().getKey();
+                            databaseReference.child(imageUploadId).setValue(lossModel);
+                            Snackbar.make(coordinatorLayout, R.string.item_removed_message, Snackbar.LENGTH_LONG)
+                                    .setAction(R.string.undo, v -> {
+                                        // Respond to the click, such as by undoing the modification that caused
+                                        // this message to be displayed
+                                    })
+                                    .show();
                         }
-                    });
+                    }
                 }
-            });
+
+                if (TextUtils.isEmpty(userNameWrite.getText())) {  // If the text are empty the movie will not be approved
+                    userNameWrite.setError("Name is required!");  // Print text of error if the text are empty
+                }
+
+                if (TextUtils.isEmpty(phoneWrite.getText())) {  // If the text are empty the movie will not be approved
+                    phoneWrite.setError("Phone is required!");  // Print text of error if the text are empty
+                }
+
+                if (TextUtils.isEmpty(placeWrite.getText())) {  // If the text are empty the movie will not be approved
+                    placeWrite.setError("Place is required!");  // Print text of error if the text are empty
+                }
+
+                if (TextUtils.isEmpty(descriptionWrite.getText())) {  // If the text are empty the movie will not be approved
+                    descriptionWrite.setError("Description is required!");  // Print text of error if the text are empty
+                }
+            }));
         } else {
             Toast.makeText(AddLoss.this, "Please Select Image", Toast.LENGTH_LONG).show();
         }

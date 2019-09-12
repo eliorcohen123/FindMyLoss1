@@ -173,17 +173,14 @@ public class AdapterAllLoss extends RecyclerView.Adapter<AdapterAllLoss.ViewHold
 
         holder.description.setText(lossModel.getmDescription());
 
-        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) ==
-                        PackageManager.PERMISSION_GRANTED) {
-                    String phone = "tel:" + lossList.get(position).getmPhone();
-                    Intent i = new Intent(Intent.ACTION_CALL, Uri.parse(phone));
-                    context.startActivity(i);
-                } else {
-                    ActivityCompat.requestPermissions((Activity) mInflater.getContext(), new String[]{Manifest.permission.CALL_PHONE}, 0);
-                }
+        holder.relativeLayout.setOnClickListener(v -> {
+            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) ==
+                    PackageManager.PERMISSION_GRANTED) {
+                String phone = "tel:" + lossList.get(position).getmPhone();
+                Intent i = new Intent(Intent.ACTION_CALL, Uri.parse(phone));
+                context.startActivity(i);
+            } else {
+                ActivityCompat.requestPermissions((Activity) mInflater.getContext(), new String[]{Manifest.permission.CALL_PHONE}, 0);
             }
         });
 
