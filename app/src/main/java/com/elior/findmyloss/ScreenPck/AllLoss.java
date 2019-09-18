@@ -291,14 +291,9 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
             if (ActivityCompat.shouldShowRequestPermissionRationale(AllLoss.this, Manifest.permission.ACCESS_COARSE_LOCATION)) {
 //                Toast.makeText(MainActivity.this, "Please I need yor location to...", Toast.LENGTH_LONG).show();
                 final Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        ActivityCompat.requestPermissions(AllLoss.this,
-                                new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
-                                MY_PERMISSIONS_REQUEST_LOCATION);
-                    }
-                }, 3000);
+                handler.postDelayed(() -> ActivityCompat.requestPermissions(AllLoss.this,
+                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_LOCATION), 3000);
             } else {
                 // No explanation needed; request the permission
                 ActivityCompat.requestPermissions(AllLoss.this,
