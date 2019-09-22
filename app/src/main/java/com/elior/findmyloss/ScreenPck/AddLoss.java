@@ -181,6 +181,7 @@ public class AddLoss extends AppCompatActivity implements NavigationView.OnNavig
                             @SuppressWarnings("VisibleForTests")
                             LossModel lossModel = new LossModel(name, phone, place, date1, description, uri.toString(), lat, lng);
                             String imageUploadId = databaseReference.push().getKey();
+                            assert imageUploadId != null;
                             databaseReference.child(imageUploadId).setValue(lossModel);
                             Snackbar.make(coordinatorLayout, R.string.item_removed_message, Snackbar.LENGTH_LONG)
                                     .setAction(R.string.undo, v -> {
