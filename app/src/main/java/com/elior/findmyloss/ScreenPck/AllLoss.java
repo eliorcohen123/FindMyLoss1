@@ -113,6 +113,7 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
     @Override
     public void onStart() {
         super.onStart();
+
         if (!checkPermissions()) {
             Log.i(TAG, "Inside onStart function; requesting permission when permission is not available");
             requestPermissions();
@@ -126,6 +127,7 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
     @Override
     protected void onResume() {
         super.onResume();
+
         startLocationUpdates();
     }
 
@@ -133,6 +135,7 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
     @Override
     protected void onPause() {
         super.onPause();
+
         startLocationUpdates();
 //        stopLocationUpdates();
     }
