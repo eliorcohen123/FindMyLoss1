@@ -19,7 +19,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.elior.findmyloss.AdapterPck.AdapterNearbyLoss;
+import com.elior.findmyloss.AdapterPck.AdapterLoss;
 import com.elior.findmyloss.OthersPck.ItemDecoration;
 import com.elior.findmyloss.OthersPck.LossModel;
 import com.elior.findmyloss.R;
@@ -52,7 +52,7 @@ public class NearbyLoss extends AppCompatActivity implements NavigationView.OnNa
     private Criteria criteria;
     private String provider;
     private RecyclerView recyclerView;
-    private AdapterNearbyLoss adapter;
+    private AdapterLoss adapter;
     private android.support.v7.widget.SearchView searchView;
     private DrawerLayout drawer;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -180,7 +180,7 @@ public class NearbyLoss extends AppCompatActivity implements NavigationView.OnNa
                             }
                         }
                     }
-                    adapter = new AdapterNearbyLoss(NearbyLoss.this, arrayListMyNearLoss);
+                    adapter = new AdapterLoss(NearbyLoss.this, arrayListMyNearLoss);
                     recyclerView.setAdapter(adapter);
                 } catch (Exception e) {
 

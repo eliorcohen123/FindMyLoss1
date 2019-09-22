@@ -89,7 +89,7 @@ public class AddLoss extends AppCompatActivity implements NavigationView.OnNavig
 
     private void initListeners() {
         chooseButton.setOnClickListener(this);
-        chooseButton.setOnClickListener(this);
+        uploadButton.setOnClickListener(this);
     }
 
     private void initLocation() {

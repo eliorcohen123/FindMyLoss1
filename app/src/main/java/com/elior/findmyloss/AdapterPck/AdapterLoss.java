@@ -33,7 +33,7 @@ import com.bumptech.glide.Glide;
 import com.elior.findmyloss.OthersPck.LossModel;
 import com.elior.findmyloss.R;
 
-public class AdapterNearbyLoss extends RecyclerView.Adapter<AdapterNearbyLoss.ViewHolder> implements Filterable {
+public class AdapterLoss extends RecyclerView.Adapter<AdapterLoss.ViewHolder> implements Filterable {
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
 
@@ -112,7 +112,7 @@ public class AdapterNearbyLoss extends RecyclerView.Adapter<AdapterNearbyLoss.Vi
     private String provider;
     private final LayoutInflater mInflater;
 
-    public AdapterNearbyLoss(Context context, List<LossModel> lossList) {
+    public AdapterLoss(Context context, List<LossModel> lossList) {
         this.lossList = lossList;
         this.context = context;
         this.lossListNearbyFiltered = lossList;

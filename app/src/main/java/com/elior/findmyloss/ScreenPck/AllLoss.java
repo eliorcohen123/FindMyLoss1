@@ -42,7 +42,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.elior.findmyloss.AdapterPck.AdapterAllLoss;
+import com.elior.findmyloss.AdapterPck.AdapterLoss;
 import com.elior.findmyloss.OthersPck.ItemDecoration;
 import com.elior.findmyloss.OthersPck.LossModel;
 import com.elior.findmyloss.R;
@@ -87,7 +87,7 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
     private Criteria criteria;
     private String provider;
     private RecyclerView recyclerView;
-    private AdapterAllLoss adapter;
+    private AdapterLoss adapter;
     private android.support.v7.widget.SearchView searchView;
     private SwipeRefreshLayout swipeRefreshLayout;
     private ProgressDialog progressDialog;
@@ -236,7 +236,7 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
                         LossModel lossModel = postSnapshot.getValue(LossModel.class);
                         arrayListAllLoss.add(lossModel);
                     }
-                    adapter = new AdapterAllLoss(AllLoss.this, arrayListAllLoss);
+                    adapter = new AdapterLoss(AllLoss.this, arrayListAllLoss);
                     recyclerView.setAdapter(adapter);
                 } catch (Exception e) {
 
