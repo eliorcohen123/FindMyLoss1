@@ -23,9 +23,11 @@ import com.elior.findmyloss.AdapterPck.AdapterLoss;
 import com.elior.findmyloss.OthersPck.ItemDecoration;
 import com.elior.findmyloss.OthersPck.LossModel;
 import com.elior.findmyloss.R;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +55,7 @@ public class NearbyLoss extends AppCompatActivity implements NavigationView.OnNa
     private String provider;
     private RecyclerView recyclerView;
     private AdapterLoss adapter;
-    private android.support.v7.widget.SearchView searchView;
+    private SearchView searchView;
     private DrawerLayout drawer;
     private SwipeRefreshLayout swipeRefreshLayout;
     private ProgressDialog progressDialog;
@@ -143,14 +145,14 @@ public class NearbyLoss extends AppCompatActivity implements NavigationView.OnNa
         progressDialog.show();
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.addValueEventListener(new com.google.firebase.database.ValueEventListener() {
+        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(com.google.firebase.database.DataSnapshot snapshot) {
+            public void onDataChange(DataSnapshot snapshot) {
                 try {
                     arrayListMyNearLoss.clear();
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(NearbyLoss.this);
                     int myRadius = prefs.getInt("seek", 5000);
-                    for (com.google.firebase.database.DataSnapshot postSnapshot : snapshot.getChildren()) {
+                    for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                         Double lat1 = (Double) postSnapshot.child("mLat").getValue();
                         Double lng1 = (Double) postSnapshot.child("mLng").getValue();
                         if (ActivityCompat.checkSelfPermission(NearbyLoss.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -200,7 +202,7 @@ public class NearbyLoss extends AppCompatActivity implements NavigationView.OnNa
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_search, menu);
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        searchView = (android.support.v7.widget.SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setMaxWidth(Integer.MAX_VALUE);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
