@@ -166,7 +166,7 @@ public class AddLoss extends AppCompatActivity implements NavigationView.OnNavig
                     location = locationManager.getLastKnownLocation(provider);
                     if (location != null) {
                         if (!TextUtils.isEmpty(userNameWrite.getText()) && !TextUtils.isEmpty(phoneWrite.getText())
-                                && !TextUtils.isEmpty(placeWrite.getText()) && !TextUtils.isEmpty(descriptionWrite.getText())) {  // If the text are not empty the movie will not be approved
+                                && !TextUtils.isEmpty(placeWrite.getText()) && !TextUtils.isEmpty(descriptionWrite.getText())) {  // If the text is not empty the movie will not be approved
                             Date date = new Date();
                             String date1 = date.toString().trim();
                             String name = userNameWrite.getText().toString().trim();
