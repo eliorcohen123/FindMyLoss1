@@ -88,7 +88,7 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
     private String provider;
     private RecyclerView recyclerView;
     private AdapterLoss adapter;
-    private android.support.v7.widget.SearchView searchView;
+    private SearchView searchView;
     private SwipeRefreshLayout swipeRefreshLayout;
     private ProgressDialog progressDialog;
     private DatabaseReference databaseReference;
@@ -346,7 +346,7 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_search, menu);
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        searchView = (android.support.v7.widget.SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setMaxWidth(Integer.MAX_VALUE);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
