@@ -50,8 +50,7 @@ public class MySeekBar extends Preference implements OnSeekBarChangeListener, On
         result.append(progress);
         txtSummary.setText(result.toString());
         Editor editor = sharedPreferences.edit();
-        editor.putInt(getKey(), progress);
-        editor.apply();
+        editor.putInt(getKey(), progress).apply();
     }
 
     public void onStartTrackingTouch(SeekBar seekBar) {
