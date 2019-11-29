@@ -182,8 +182,9 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
         findViewById(R.id.myButton).setOnClickListener(v -> {
             if (drawer.isDrawerOpen(GravityCompat.END)) {
                 drawer.closeDrawer(GravityCompat.END);
-            } else
+            } else {
                 drawer.openDrawer(GravityCompat.END);
+            }
         });
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -285,7 +286,6 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
             }
         };
 
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(AllLoss.this);
         if (ActivityCompat.checkSelfPermission(AllLoss.this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(AllLoss.this, Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {

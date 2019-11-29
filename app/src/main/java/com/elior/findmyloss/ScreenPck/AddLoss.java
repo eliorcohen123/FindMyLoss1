@@ -104,8 +104,9 @@ public class AddLoss extends AppCompatActivity implements NavigationView.OnNavig
         findViewById(R.id.myButton).setOnClickListener(v -> {
             if (drawer.isDrawerOpen(GravityCompat.END)) {
                 drawer.closeDrawer(GravityCompat.END);
-            } else
+            } else {
                 drawer.openDrawer(GravityCompat.END);
+            }
         });
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
