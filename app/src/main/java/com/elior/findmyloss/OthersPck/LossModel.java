@@ -11,10 +11,6 @@ public class LossModel {
     private double mLat;
     private double mLng;
 
-    public LossModel() {
-
-    }
-
     public LossModel(String mName, String mPhone, String mPlace, String mDate, String mDescription, String mImage, double mLat, double mLng) {
         this.mName = mName;
         this.mPhone = mPhone;
@@ -24,6 +20,10 @@ public class LossModel {
         this.mImage = mImage;
         this.mLat = mLat;
         this.mLng = mLng;
+    }
+
+    public LossModel() {
+
     }
 
     public String getmName() {
