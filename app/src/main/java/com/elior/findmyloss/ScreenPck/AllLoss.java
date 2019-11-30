@@ -37,8 +37,6 @@ import com.elior.findmyloss.AdapterPck.AdapterLoss;
 import com.elior.findmyloss.OthersPck.ItemDecoration;
 import com.elior.findmyloss.OthersPck.LossModel;
 import com.elior.findmyloss.R;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
