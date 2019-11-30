@@ -20,10 +20,10 @@ public class LossModel {
         this.mPhone = mPhone;
         this.mPlace = mPlace;
         this.mDate = mDate;
-        this.mLat = mLat;
-        this.mLng = mLng;
         this.mDescription = mDescription;
         this.mImage = mImage;
+        this.mLat = mLat;
+        this.mLng = mLng;
     }
 
     public String getmName() {
