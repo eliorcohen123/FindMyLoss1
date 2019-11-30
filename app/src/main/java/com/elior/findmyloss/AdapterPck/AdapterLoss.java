@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -26,7 +26,7 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.LocationManager;
-import android.support.v4.app.ActivityCompat;
+import androidx.core.app.ActivityCompat;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -67,7 +67,7 @@ public class AdapterLoss extends RecyclerView.Adapter<AdapterLoss.ViewHolder> im
         private final MenuItem.OnMenuItemClickListener onChange = new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                LossModel lossModel = lossList.get(getAdapterPosition());
+                LossModel lossModel = lossListNearbyFiltered.get(getAdapterPosition());
                 if (item.getItemId() == 1) {
                     String name = lossModel.getmName();
                     String phone = lossModel.getmPhone();
@@ -173,7 +173,7 @@ public class AdapterLoss extends RecyclerView.Adapter<AdapterLoss.ViewHolder> im
         holder.relativeLayout.setOnClickListener(v -> {
             if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) ==
                     PackageManager.PERMISSION_GRANTED) {
-                String phone = "tel:" + lossList.get(position).getmPhone();
+                String phone = "tel:" + lossModel.getmPhone();
                 Intent i = new Intent(Intent.ACTION_CALL, Uri.parse(phone));
                 context.startActivity(i);
             } else {

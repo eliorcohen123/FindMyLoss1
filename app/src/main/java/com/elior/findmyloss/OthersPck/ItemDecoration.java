@@ -1,7 +1,7 @@
 package com.elior.findmyloss.OthersPck;
 
 import android.graphics.Rect;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 
 public class ItemDecoration extends RecyclerView.ItemDecoration {
