@@ -35,10 +35,10 @@ public class MySeekBar extends Preference implements OnSeekBarChangeListener, On
         seekBar = view.findViewById(R.id.seekBar);
         txtSummary = view.findViewById(R.id.summary);
         units = this.sharedPreferences.getString(getContext().getString(R.string.key_units), "1000");
-        int max = (int) ((50000) / 0.9144d);
+        int max = 50000;
         seekBar.setMax(max);
         int currentProgress = this.sharedPreferences.getInt(getKey(), 0);
-        String stringBuilder = String.valueOf(currentProgress) + units;
+        String stringBuilder = currentProgress + units;
         setSummary(stringBuilder);
         seekBar.setProgress(currentProgress);
         seekBar.setOnSeekBarChangeListener(this);
@@ -59,7 +59,7 @@ public class MySeekBar extends Preference implements OnSeekBarChangeListener, On
 
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         int currentProgress = this.seekBar.getProgress();
-        seekBar.setProgress((int) (currentProgress / 0.9144d));
+        seekBar.setProgress((int) (currentProgress * 0.9144d));
         return true;
     }
 

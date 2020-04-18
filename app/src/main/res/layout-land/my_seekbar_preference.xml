@@ -40,7 +40,7 @@
             android:id="@+id/textKm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Km"
+            android:text="Meters"
             android:layout_weight="1" />
         </LinearLayout>
     </LinearLayout>
