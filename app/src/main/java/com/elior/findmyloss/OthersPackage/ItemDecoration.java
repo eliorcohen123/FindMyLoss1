@@ -1,4 +1,4 @@
-package com.elior.findmyloss.OthersPck;
+package com.elior.findmyloss.OthersPackage;
 
 import android.graphics.Rect;
 import androidx.recyclerview.widget.RecyclerView;

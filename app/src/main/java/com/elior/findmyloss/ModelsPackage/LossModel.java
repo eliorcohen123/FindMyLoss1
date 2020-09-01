@@ -1,4 +1,4 @@
-package com.elior.findmyloss.OthersPck;
+package com.elior.findmyloss.ModelsPackage;
 
 public class LossModel {
 

@@ -1,4 +1,4 @@
-package com.elior.findmyloss.ScreenPck;
+package com.elior.findmyloss.PagesPackage;
 
 import android.os.Bundle;
 import android.preference.PreferenceActivity;

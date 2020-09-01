@@ -1,4 +1,4 @@
-package com.elior.findmyloss.AdapterPck;
+package com.elior.findmyloss.CustomAdaptersPackage;
 
 import android.app.Activity;
 import android.content.Context;
@@ -30,10 +30,10 @@ import androidx.core.app.ActivityCompat;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.elior.findmyloss.OthersPck.LossModel;
+import com.elior.findmyloss.ModelsPackage.LossModel;
 import com.elior.findmyloss.R;
 
-public class AdapterLoss extends RecyclerView.Adapter<AdapterLoss.ViewHolder> implements Filterable {
+public class CustomAdapterLoss extends RecyclerView.Adapter<CustomAdapterLoss.ViewHolder> implements Filterable {
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
 
@@ -112,7 +112,7 @@ public class AdapterLoss extends RecyclerView.Adapter<AdapterLoss.ViewHolder> im
     private String provider;
     private final LayoutInflater mInflater;
 
-    public AdapterLoss(Context context, List<LossModel> lossList) {
+    public CustomAdapterLoss(Context context, List<LossModel> lossList) {
         this.lossList = lossList;
         this.context = context;
         this.lossListNearbyFiltered = lossList;

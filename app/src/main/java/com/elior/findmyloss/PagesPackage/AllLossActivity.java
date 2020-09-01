@@ -1,4 +1,4 @@
-package com.elior.findmyloss.ScreenPck;
+package com.elior.findmyloss.PagesPackage;
 
 import android.Manifest;
 import android.app.ProgressDialog;
@@ -33,9 +33,9 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.elior.findmyloss.AdapterPck.AdapterLoss;
-import com.elior.findmyloss.OthersPck.ItemDecoration;
-import com.elior.findmyloss.OthersPck.LossModel;
+import com.elior.findmyloss.CustomAdaptersPackage.CustomAdapterLoss;
+import com.elior.findmyloss.OthersPackage.ItemDecoration;
+import com.elior.findmyloss.ModelsPackage.LossModel;
 import com.elior.findmyloss.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -51,7 +51,7 @@ import java.util.List;
 
 import guy4444.smartrate.SmartRate;
 
-public class AllLoss extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class AllLossActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private List<LossModel> arrayListAllLoss;
     private DrawerLayout drawer;
@@ -66,7 +66,7 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
     private Criteria criteria;
     private String provider;
     private RecyclerView recyclerView;
-    private AdapterLoss adapter;
+    private CustomAdapterLoss adapter;
     private SearchView searchView;
     private SwipeRefreshLayout swipeRefreshLayout;
     private ProgressDialog progressDialog;
@@ -131,7 +131,7 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
     }
 
     private void initAppRater() {
-        SmartRate.Rate(AllLoss.this
+        SmartRate.Rate(AllLossActivity.this
                 , "Rate Us"
                 , "Tell others what you think about this app"
                 , "Continue"
@@ -187,7 +187,7 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
             finish();
             startActivity(getIntent());  // Refresh activity
 
-            Toast toast = Toast.makeText(AllLoss.this, "The list are refreshed!", Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(AllLossActivity.this, "The list are refreshed!", Toast.LENGTH_LONG);
             View view = toast.getView();
             view.getBackground().setColorFilter(getResources().getColor(R.color.colorLightBlue), PorterDuff.Mode.SRC_IN);
             TextView text = view.findViewById(android.R.id.message);
@@ -218,7 +218,7 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
                         LossModel lossModel = postSnapshot.getValue(LossModel.class);
                         arrayListAllLoss.add(lossModel);
                     }
-                    adapter = new AdapterLoss(AllLoss.this, arrayListAllLoss);
+                    adapter = new CustomAdapterLoss(AllLossActivity.this, arrayListAllLoss);
                     recyclerView.setAdapter(adapter);
                 } catch (Exception e) {
 
@@ -291,8 +291,8 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         if (id == R.id.add_loss) {
-            if (ActivityCompat.checkSelfPermission(AllLoss.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.checkSelfPermission(AllLoss.this, Manifest.permission.ACCESS_COARSE_LOCATION);
+            if (ActivityCompat.checkSelfPermission(AllLossActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.checkSelfPermission(AllLossActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION);
             }// TODO: Consider calling
 //    ActivityCompat#requestPermissions
 // here to request the missing permissions, and then overriding
@@ -303,15 +303,15 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
             if (provider != null) {
                 location = locationManager.getLastKnownLocation(provider);
                 if (location != null) {
-                    Intent intentAddLoss = new Intent(AllLoss.this, AddLoss.class);
+                    Intent intentAddLoss = new Intent(AllLossActivity.this, AddLossActivity.class);
                     startActivity(intentAddLoss);
                 } else {
-                    Toast.makeText(AllLoss.this, "You need last location to move to 'Add loss' screen", Toast.LENGTH_LONG).show();
+                    Toast.makeText(AllLossActivity.this, "You need last location to move to 'Add loss' screen", Toast.LENGTH_LONG).show();
                 }
             }
         } else if (id == R.id.nearby_loss) {
-            if (ActivityCompat.checkSelfPermission(AllLoss.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.checkSelfPermission(AllLoss.this, Manifest.permission.ACCESS_COARSE_LOCATION);
+            if (ActivityCompat.checkSelfPermission(AllLossActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.checkSelfPermission(AllLossActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION);
             }// TODO: Consider calling
 //    ActivityCompat#requestPermissions
 // here to request the missing permissions, and then overriding
@@ -322,14 +322,14 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
             if (provider != null) {
                 location = locationManager.getLastKnownLocation(provider);
                 if (location != null) {
-                    Intent intentMyNearLoss = new Intent(AllLoss.this, NearbyLoss.class);
+                    Intent intentMyNearLoss = new Intent(AllLossActivity.this, NearbyLossActivity.class);
                     startActivity(intentMyNearLoss);
                 } else {
-                    Toast.makeText(AllLoss.this, "You need last location to move to 'Nearby loss' screen", Toast.LENGTH_LONG).show();
+                    Toast.makeText(AllLossActivity.this, "You need last location to move to 'Nearby loss' screen", Toast.LENGTH_LONG).show();
                 }
             }
         } else if (id == R.id.my_radius) {
-            Intent intentRadius = new Intent(AllLoss.this, SettingsActivity.class);
+            Intent intentRadius = new Intent(AllLossActivity.this, SettingsActivity.class);
             startActivity(intentRadius);
         } else if (id == R.id.share_intent) {
             Intent sendIntent = new Intent();
@@ -355,8 +355,8 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
     }
 
     private void startLocationUpdates() {
-        if (ActivityCompat.checkSelfPermission(AllLoss.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(AllLoss.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(AllLossActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(AllLossActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
@@ -394,7 +394,7 @@ public class AllLoss extends AppCompatActivity implements NavigationView.OnNavig
 
     // Start the permission request dialog
     private void startLocationPermissionRequest() {
-        ActivityCompat.requestPermissions(AllLoss.this,
+        ActivityCompat.requestPermissions(AllLossActivity.this,
                 new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                 MY_PERMISSIONS_REQUEST_LOCATION);
     }

@@ -1,4 +1,4 @@
-package com.elior.findmyloss.OthersPck;
+package com.elior.findmyloss.OthersPackage;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -12,7 +12,7 @@ import androidx.core.app.NotificationCompat;
 import android.util.Log;
 
 import com.elior.findmyloss.R;
-import com.elior.findmyloss.ScreenPck.AllLoss;
+import com.elior.findmyloss.PagesPackage.AllLossActivity;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -44,7 +44,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
      * @param messageBody FCM message body received.
      */
     private void sendNotification(String messageBody) {
-        Intent intent = new Intent(this, AllLoss.class);
+        Intent intent = new Intent(this, AllLossActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);

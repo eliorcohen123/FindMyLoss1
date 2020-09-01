@@ -1,4 +1,4 @@
-package com.elior.findmyloss.ScreenPck;
+package com.elior.findmyloss.PagesPackage;
 
 import android.Manifest;
 import android.app.ProgressDialog;
@@ -31,7 +31,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.elior.findmyloss.OthersPck.LossModel;
+import com.elior.findmyloss.ModelsPackage.LossModel;
 import com.elior.findmyloss.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -41,7 +41,7 @@ import com.google.firebase.storage.StorageReference;
 import java.io.IOException;
 import java.util.Date;
 
-public class AddLoss extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+public class AddLossActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     private EditText userNameWrite, phoneWrite, placeWrite, descriptionWrite;
     private Button chooseButton, uploadButton;
@@ -154,8 +154,8 @@ public class AddLoss extends AppCompatActivity implements NavigationView.OnNavig
             }
             final StorageReference storageReference2nd = storageReference.child(storage_Path + System.currentTimeMillis() + "." + getFileExtension(FilePathUri));
             storageReference2nd.putFile(FilePathUri).addOnSuccessListener(taskSnapshot -> storageReference2nd.getDownloadUrl().addOnSuccessListener(uri -> {
-                if (ActivityCompat.checkSelfPermission(AddLoss.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.checkSelfPermission(AddLoss.this, Manifest.permission.ACCESS_COARSE_LOCATION);
+                if (ActivityCompat.checkSelfPermission(AddLossActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.checkSelfPermission(AddLossActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION);
                 }// TODO: Consider calling
 //    ActivityCompat#requestPermissions
 // here to request the missing permissions, and then overriding
@@ -178,7 +178,7 @@ public class AddLoss extends AppCompatActivity implements NavigationView.OnNavig
                             double lng = location.getLongitude();
 
                             progressDialog.dismiss();
-                            Toast.makeText(AddLoss.this, "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
+                            Toast.makeText(AddLossActivity.this, "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
                             @SuppressWarnings("VisibleForTests")
                             LossModel lossModel = new LossModel(name, phone, place, date1, description, uri.toString(), lat, lng);
                             String imageUploadId = databaseReference.push().getKey();
@@ -211,7 +211,7 @@ public class AddLoss extends AppCompatActivity implements NavigationView.OnNavig
                 }
             }));
         } else {
-            Toast.makeText(AddLoss.this, "Please Select Image", Toast.LENGTH_LONG).show();
+            Toast.makeText(AddLossActivity.this, "Please Select Image", Toast.LENGTH_LONG).show();
         }
     }
 

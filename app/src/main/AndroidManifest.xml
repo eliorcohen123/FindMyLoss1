@@ -22,7 +22,7 @@
         android:roundIcon="@drawable/lossicon"
         android:supportsRtl="false"
         android:theme="@style/AppTheme2">
-        <activity android:name=".ScreenPck.AllLoss">
+        <activity android:name=".PagesPackage.AllLossActivity">
 
             <meta-data
                 android:name="android.app.searchable"
@@ -38,11 +38,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ScreenPck.AddLoss" />
-        <activity android:name=".ScreenPck.NearbyLoss" />
-        <activity android:name=".ScreenPck.SettingsActivity" />
+        <activity android:name=".PagesPackage.AddLossActivity" />
+        <activity android:name=".PagesPackage.NearbyLossActivity" />
+        <activity android:name=".PagesPackage.SettingsActivity" />
 
-        <service android:name=".OthersPck.MyFirebaseMessagingService">
+        <service android:name=".OthersPackage.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>

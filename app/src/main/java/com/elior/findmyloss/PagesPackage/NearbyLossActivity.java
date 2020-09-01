@@ -1,4 +1,4 @@
-package com.elior.findmyloss.ScreenPck;
+package com.elior.findmyloss.PagesPackage;
 
 import android.app.ProgressDialog;
 import android.app.SearchManager;
@@ -19,9 +19,9 @@ import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.elior.findmyloss.AdapterPck.AdapterLoss;
-import com.elior.findmyloss.OthersPck.ItemDecoration;
-import com.elior.findmyloss.OthersPck.LossModel;
+import com.elior.findmyloss.CustomAdaptersPackage.CustomAdapterLoss;
+import com.elior.findmyloss.OthersPackage.ItemDecoration;
+import com.elior.findmyloss.ModelsPackage.LossModel;
 import com.elior.findmyloss.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -46,7 +46,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class NearbyLoss extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class NearbyLossActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private List<LossModel> arrayListMyNearLoss;
     private Location location;
@@ -54,7 +54,7 @@ public class NearbyLoss extends AppCompatActivity implements NavigationView.OnNa
     private Criteria criteria;
     private String provider;
     private RecyclerView recyclerView;
-    private AdapterLoss adapter;
+    private CustomAdapterLoss adapter;
     private SearchView searchView;
     private DrawerLayout drawer;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -123,7 +123,7 @@ public class NearbyLoss extends AppCompatActivity implements NavigationView.OnNa
             finish();
             startActivity(getIntent());  // Refresh activity
 
-            Toast toast = Toast.makeText(NearbyLoss.this, "The list are refreshed!", Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(NearbyLossActivity.this, "The list are refreshed!", Toast.LENGTH_LONG);
             View view = toast.getView();
             view.getBackground().setColorFilter(getResources().getColor(R.color.colorLightBlue), PorterDuff.Mode.SRC_IN);
             TextView text = view.findViewById(android.R.id.message);
@@ -140,7 +140,7 @@ public class NearbyLoss extends AppCompatActivity implements NavigationView.OnNa
         itemDecoration = new ItemDecoration(5);
         recyclerView.addItemDecoration(itemDecoration);
 
-        progressDialog = new ProgressDialog(NearbyLoss.this);
+        progressDialog = new ProgressDialog(NearbyLossActivity.this);
         progressDialog.setMessage(getString(R.string.loading_data));
         progressDialog.show();
 
@@ -150,13 +150,13 @@ public class NearbyLoss extends AppCompatActivity implements NavigationView.OnNa
             public void onDataChange(DataSnapshot snapshot) {
                 try {
                     arrayListMyNearLoss.clear();
-                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(NearbyLoss.this);
+                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(NearbyLossActivity.this);
                     int myRadius = prefs.getInt("seek", 5000);
                     for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                         Double lat1 = (Double) postSnapshot.child("mLat").getValue();
                         Double lng1 = (Double) postSnapshot.child("mLng").getValue();
-                        if (ActivityCompat.checkSelfPermission(NearbyLoss.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                            ActivityCompat.checkSelfPermission(NearbyLoss.this, Manifest.permission.ACCESS_COARSE_LOCATION);
+                        if (ActivityCompat.checkSelfPermission(NearbyLossActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                            ActivityCompat.checkSelfPermission(NearbyLossActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION);
                         }// TODO: Consider calling
 //    ActivityCompat#requestPermissions
 // here to request the missing permissions, and then overriding
@@ -182,7 +182,7 @@ public class NearbyLoss extends AppCompatActivity implements NavigationView.OnNa
                             }
                         }
                     }
-                    adapter = new AdapterLoss(NearbyLoss.this, arrayListMyNearLoss);
+                    adapter = new CustomAdapterLoss(NearbyLossActivity.this, arrayListMyNearLoss);
                     recyclerView.setAdapter(adapter);
                 } catch (Exception e) {
 
