@@ -43,6 +43,7 @@ public class CustomAdapterLoss extends RecyclerView.Adapter<CustomAdapterLoss.Vi
 
         public ViewHolder(View itemView) {
             super(itemView);
+
             name = itemView.findViewById(R.id.name1);
             phone = itemView.findViewById(R.id.phone1);
             place = itemView.findViewById(R.id.place1);
