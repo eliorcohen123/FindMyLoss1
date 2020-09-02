@@ -121,7 +121,7 @@ public class CustomAdapterLoss extends RecyclerView.Adapter<CustomAdapterLoss.Vi
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.list_item_nearby_loss, parent, false);
+        View view = mInflater.inflate(R.layout.adapter_nearby_loss, parent, false);
         return new ViewHolder(view);
     }
 

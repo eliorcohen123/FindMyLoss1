@@ -46,7 +46,7 @@
         tools:openDrawer="end">
 
         <include
-            layout="@layout/app_bar_main_nearby"
+            layout="@layout/app_bar_nearby_loss"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

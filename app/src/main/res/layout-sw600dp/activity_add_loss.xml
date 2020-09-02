@@ -48,7 +48,7 @@
         tools:openDrawer="end">
 
         <include
-            layout="@layout/app_bar_main_add"
+            layout="@layout/app_bar_add_loss"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

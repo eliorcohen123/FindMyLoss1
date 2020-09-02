@@ -64,7 +64,7 @@ public class AddLossActivity extends AppCompatActivity implements NavigationView
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_loss);
+        setContentView(R.layout.activity_add_loss);
 
         initUI();
         initListeners();
