@@ -59,7 +59,6 @@ public class AllLossActivity extends AppCompatActivity implements NavigationView
     private FusedLocationProviderClient mFusedLocationClient;
     private LocationRequest mLocationRequest;
     private LocationCallback mLocationCallback;
-    private Location mLastLocation;
     private static final String TAG = "MyLocation";
     private Location location;
     private LocationManager locationManager;
@@ -405,7 +404,7 @@ public class AllLossActivity extends AppCompatActivity implements NavigationView
         mFusedLocationClient.getLastLocation()
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful() && task.getResult() != null) {
-                        mLastLocation = task.getResult();
+                        location = task.getResult();
                     } else {
                         Log.i(TAG, "Inside getLocation function. Error while getting location");
                         System.out.println(TAG + task.getException());
