@@ -53,7 +53,7 @@ public class AddLossActivity extends AppCompatActivity implements NavigationView
     private CoordinatorLayout coordinatorLayout;
     private String storage_Path = "My_Storage";
     private ImageView selectImage;
-    private Uri FilePathUri;
+    private Uri filePathUri;
     private StorageReference storageReference;
     private DatabaseReference databaseReference;
     private int image_Request_Code = 7;
@@ -128,9 +128,9 @@ public class AddLossActivity extends AppCompatActivity implements NavigationView
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == image_Request_Code && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            FilePathUri = data.getData();
+            filePathUri = data.getData();
             try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), FilePathUri);
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePathUri);
                 selectImage.setImageBitmap(bitmap);
                 chooseButton.setText("Image Selected");
             } catch (IOException e) {
@@ -146,14 +146,14 @@ public class AddLossActivity extends AppCompatActivity implements NavigationView
     }
 
     public void uploadImageFileToFirebaseStorage() {
-        if (FilePathUri != null) {
+        if (filePathUri != null) {
             if (!TextUtils.isEmpty(userNameWrite.getText()) && !TextUtils.isEmpty(phoneWrite.getText())
                     && !TextUtils.isEmpty(placeWrite.getText()) && !TextUtils.isEmpty(descriptionWrite.getText())) {  // If the text are not empty the movie will not be approved
                 progressDialog.setTitle("Data is Uploading...");
                 progressDialog.show();
             }
-            final StorageReference storageReference2nd = storageReference.child(storage_Path + System.currentTimeMillis() + "." + getFileExtension(FilePathUri));
-            storageReference2nd.putFile(FilePathUri).addOnSuccessListener(taskSnapshot -> storageReference2nd.getDownloadUrl().addOnSuccessListener(uri -> {
+            final StorageReference storageReference2nd = storageReference.child(storage_Path + System.currentTimeMillis() + "." + getFileExtension(filePathUri));
+            storageReference2nd.putFile(filePathUri).addOnSuccessListener(taskSnapshot -> storageReference2nd.getDownloadUrl().addOnSuccessListener(uri -> {
                 if (ActivityCompat.checkSelfPermission(AddLossActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.checkSelfPermission(AddLossActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION);
                 }// TODO: Consider calling
