@@ -139,13 +139,13 @@ public class AddLossActivity extends AppCompatActivity implements NavigationView
         }
     }
 
-    public String getFileExtension(Uri uri) {
+    private String getFileExtension(Uri uri) {
         ContentResolver contentResolver = getContentResolver();
         MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
     }
 
-    public void uploadImageFileToFirebaseStorage() {
+    private void uploadImageFileToFirebaseStorage() {
         if (filePathUri != null) {
             if (!TextUtils.isEmpty(userNameWrite.getText()) && !TextUtils.isEmpty(phoneWrite.getText())
                     && !TextUtils.isEmpty(placeWrite.getText()) && !TextUtils.isEmpty(descriptionWrite.getText())) {  // If the text are not empty the movie will not be approved
